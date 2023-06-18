@@ -1,0 +1,12 @@
+{% if __SELF__.menuItems %}
+    <ul class="nav navbar-nav mobile-menu">
+        {% partial __SELF__ ~ "::items" items=__SELF__.menuItems %}
+        
+        {% if not user  %}
+            <li><a class="custom_btn__block" href="{{ 'login' | page }}">Login</a></li>
+        {% else %}
+            <li><a class="custom_btn__block" href="#" data-request="onLogout" data-request-data="redirect: '/login'">Sign out</a></li>
+                            
+        {% endif %}
+    </ul>
+{% endif %}

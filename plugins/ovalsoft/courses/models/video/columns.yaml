@@ -1,0 +1,14 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    title:
+        label: ovalsoft.courses::lang.plugin.models.video.fields.title
+    youtube_video_id:
+        label: ovalsoft.courses::lang.plugin.models.video.fields.yt_watch
+    order:
+        label: ovalsoft.courses::lang.plugin.models.video.fields.order
+    is_published:
+        label: ovalsoft.courses::lang.plugin.models.video.fields.published
+

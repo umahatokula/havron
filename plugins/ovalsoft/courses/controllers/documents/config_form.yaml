@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Document
+
+# Model Form Field configuration
+form: $/ovalsoft/courses/models/document/fields.yaml
+
+# Model Class name
+modelClass: Ovalsoft\Courses\Models\Document
+
+# Default redirect location
+defaultRedirect: ovalsoft/courses/documents
+
+# Create page
+create:
+    title: Create Document
+    redirect: ovalsoft/courses/documents/update/:id
+    redirectClose: ovalsoft/courses/documents
+
+# Update page
+update:
+    title: Edit Document
+    redirect: ovalsoft/courses/documents
+    redirectClose: ovalsoft/courses/documents
+
+# Preview page
+preview:
+    title: Preview Document

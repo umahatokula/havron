@@ -1,0 +1,12 @@
+# ===================================
+#  Relation Behavior Config
+# ===================================
+
+videos:
+    label: Video
+    view:
+        list: $/ovalsoft/courses/models/video/columns.yaml
+        toolbarButtons: add|remove
+    manage:
+        form: $/ovalsoft/courses/models/video/fields.yaml
+        recordsPerPage: 10

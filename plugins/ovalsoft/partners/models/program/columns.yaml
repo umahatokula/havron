@@ -1,0 +1,13 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    name:
+        label: Program Name
+        searchable: true
+    partner_id:
+        label: Partner Institution
+        relation: partner_institution
+        select: name
+        searchable: true

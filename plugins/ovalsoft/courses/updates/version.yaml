@@ -1,0 +1,43 @@
+1.0.1: 
+    - First version of Courses
+    - Created courses table
+    - create_courses_table.php
+    - Created course_playlist table
+    - create_course_playlist_table.php
+    - Created categories table
+    - create_categories_table.php
+    - Created category_video table
+    - create_category_video_table.php
+    - Created audios table
+    - create_audio_table.php
+    - Created audio_course table
+    - create_audio_course_table.php
+    - Created audio_category table
+    - create_audio_category_table.php
+    - Created documents table
+    - create_documents_table.php
+    - Created category_document table
+    - create_category_document_table.php
+    - Created course_document table
+    - create_course_document_table.php
+    - Created course_usergroup table
+    - create_course_usergroup_table.php
+    - Created course_video table
+    - create_course_video_table.php
+    - Created videos table
+    - create_videos_table.php
+    - Created palylists table
+    - create_playlists_table.php
+    - Created playlist_video table
+    - create_playlist_video_table.php
+    - Created user_video table
+    - create_user_video_table.php
+    - Created playlist_usergroup table
+    - create_playlist_usergroup_table.php
+    - Seeded playlists table
+    - seed_playlists_table.php
+    - Seeded categories table
+    - seed_categories_table.php
+    - Seeded videos table
+    - seed_videos_table.php
+    - update_pixel_shop_items_table.php

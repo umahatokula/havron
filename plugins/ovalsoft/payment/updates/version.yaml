@@ -1,0 +1,9 @@
+1.0.1:
+    - 'Initialize plugin.'
+    - user_groups_add_columns.php
+1.0.2:
+    - 'Created table ovalsoft_payment_'
+    - builder_table_create_ovalsoft_payment_.php
+    - create_user_product_table.php
+    - add_fields_to_pixel_coupons_table.php
+    - add_country_id_users_table.php

@@ -1,0 +1,169 @@
+title = "Product"
+url = "/product/:slug"
+layout = "shop"
+is_hidden = 0
+
+[shopProductsDetails]
+slug = "{{ :slug }}"
+productsPage = "products"
+==
+<!-- CONTENT -->
+<!-- Intro Section -->
+<section class="inner-intro  padding bg-img1 overlay-dark light-color">
+	<div class="container">
+		<div class="row title">
+			<h1>Shop</h1>
+			<div class="page-breadcrumb">
+				<a>Home</a>/ <span>Shop</span>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Intro Section -->
+<section class="pt-90 pb-50 ptb-xs-60">
+	<div class="container shop">
+		<div class="row">
+			<div class="col-sm-12 col-md-9 product-page">
+				<div class="row">
+					<div class="col-md-4 col-sm-6">
+						<div class="">
+						
+                            <span class="xzoom-container">
+                            
+                                <img class="xzoom" src="{{ product.course.course_image ? product.course.course_image.getPath() : 'http://placehold.it/1920x1080' }}"  xoriginal="{{ product.course.course_image ? product.course.course_image.getPath() : 'http://placehold.it/1920x1080' }}" alt="{{ product.name }}" class="img-responsive" width="100%">
+
+							</span>
+
+						</div>
+					</div>
+					<!-- .product -->
+					<div class="col-md-8 col-sm-6">
+					    {% put meta %}
+							<title>{{ product.title }}</title>
+							<meta name="description" content="{{ product.seo_summary }}">
+							<meta name="keywords" content="{{ product.keywords }}">
+							<meta property="og:title" content="{{ product.title }}" />
+							<meta property="og:url" content="{{ url_current()|url_encode }}" />
+							<meta property="og:description" content="{{ product.seo_summary }}" />
+							<meta property="og:image" content="{{ product.getMainImage().thumb(600, 315, 'crop')|app }}" />
+						{% endput %}
+						
+						<form data-request="onAddToCart" data-request-flash data-request-success="CartButton.onSuccess(data)">
+							<h2 id="product-title">
+								{{ product.name }}
+							</h2>
+							<h4 id="product-option-title"></h4>
+							<div class="text-uppercase row-border">
+								{% if product.is_on_sale %}
+									<span class="label label-success">{{ 'pixel.shop::lang.frontend.onsale'|trans }}</span>
+								{% endif %}
+
+								{% if product.quantity > 0 %}
+									<span class="label label-success">{{ 'pixel.shop::lang.frontend.instock'|trans }}</span>
+								{% endif %}
+
+								{% if not product.isInfiniteQuantity() and product.quantity == 0 %}
+									<span class="label label-danger">{{ 'pixel.shop::lang.frontend.soldout'|trans }}</span>
+								{% endif %}
+							</div>
+
+							{% if product.categories|length > 0 %}
+							<p><small><i class="fas fa-tag"></i> {{ product.categories.lists('name')|join(', ') }}</small></p>
+							{% endif %}
+
+							<hr>
+
+							{% if product.brand %}
+							<div class="form-group">
+								{{ 'pixel.shop::lang.frontend.brand'|trans }}
+
+								{% if (product.brand.url) %}
+									<strong><a href="{{ product.brand.url }}">{{ product.brand.name }}</a></strong>
+								{% else %}
+									<strong>{{ product.brand.name }}</strong>
+								{% endif %}
+							</div>
+							{% endif %}
+
+							{% if product.attachments|length > 0 %}
+								<hr>
+								<h4>{{ 'pixel.shop::lang.frontend.attachments'|trans }}</h4>
+								{% for file in product.attachments %}
+									<a href="{{ file.path }}" target="_blank"><i class="fas fa-download"></i> {{ file.title ?  file.title : file.file_name }}</a><br />
+								{% endfor %}
+								<hr>
+							{% endif  %}
+
+							{% if product.is_with_variants %}
+								{% for variant in product.variants %}
+									<div class="form-group row">
+										<label class="col-md-3 text-right">{{ variant.variant }}</label>
+										<div class="col-md-6">
+											<select name="option[{{ product.slugOption(variant.variant) }}]" class="form-control shop__product-option" data-label="{{ variant.variant }}" data-slug="{{ variant.id }}">
+												<option value="" data-quantity="">{{ 'pixel.shop::lang.frontend.select_option'|trans }}</option>
+
+												{% for option in variant.items %}
+													{% if product.checkIfOutStock(option.quantity) %}
+														<option value="{{ option.ref }}" data-price="{{ product.getPriceOption(option.price) }}" data-tax={{ product.getTaxOption(option.price) }} data-quantity="{{ option.quantity }}" disabled="disabled">
+															{{ option.val }} ({{ 'pixel.shop::lang.messages.out_of_stock'|trans }})
+														</option>
+													{% else %}
+														<option value="{{ option.ref }}" data-price="{{ product.getPriceOption(option.price) }}" data-tax={{ product.getTaxOption(option.price) }} data-quantity="{{ option.quantity }}">
+															{{ option.val }}
+														</option>
+													{% endif %}
+												{% endfor %}
+											</select>
+										</div>
+									</div>
+								{% endfor %}
+							{% endif %}
+
+							
+
+						
+							<div class="price-details">
+								<span class="actual-price">{{ product.old_price }} {{ product.currency }}</span>
+								<span class="price">{{ product.price }} {{ product.currency }}</span>
+							</div>
+							<div class="description">
+								<p>
+									{{ product.description | raw }}
+								</p>
+							</div>
+							<div class="product-meta-details" style="margin-bottom: 30px;">
+								<span class="product-code">Product Code: {{ product.code }}</span>
+							</div>
+							
+							{% if product.quantity > 0 or product.isInfiniteQuantity() %}
+								<div class="product-regulator">
+									<button class="minus" type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+										<i class="fa fa-minus"></i>
+									</button>
+									<div class="output">
+										<input name="quantity" type="number" class="form-control text-center" value="1" min="1" style="width: 100%; font-size: 1.7rem; border: 0; margin-top: 0; padding-top: 20px;">
+									</div>
+									<button class="plus" type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+										<i class="fa fa-plus"></i>
+									</button>
+								</div>
+								
+								<input type="hidden" name="id" value="{{ product.id }}">
+								<input type="hidden" name="price" value="{{ product.price }}">
+								<input type="hidden" name="options" value="">
+								<input type="hidden" name="options_index" value="">
+								<button type="submit" class="btn-text" data-attach-loading>
+									{{ 'pixel.shop::lang.frontend.addtocart'|trans }}
+								</button>
+							{% endif %}
+
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+<!--End Contact-->

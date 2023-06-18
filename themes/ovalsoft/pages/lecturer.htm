@@ -1,0 +1,21 @@
+title = "Lecturer"
+url = "/lecturer/:slug"
+layout = "default"
+is_hidden = 0
+
+[lecturerComponent]
+slug = "{{ :slug }}"
+==
+<section class="inner-intro bg-img light-color overlay-before parallax-background">
+    <div class="container">
+      <div class="row title">
+        <h1 data-title="Title"><span>Title</span></h1>
+      </div>
+    </div>
+  </section>
+  <!-- Intro Section -->
+  <section class="pt-80">
+    <div class="container">
+    {% component 'lecturerComponent' %}
+    </div>
+  </section>

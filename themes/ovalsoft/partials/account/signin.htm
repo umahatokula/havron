@@ -1,0 +1,63 @@
+
+    <form 
+    data-request="onSignin" 
+    data-request-validate 
+    data-request-flash
+    data-request-success="document.getElementById('regForm').reset();" 
+    class="form-horizontal ng-pristine ng-valid" 
+    id="form">
+
+    {% flash %}
+        <div class="alert alert-{{ type }}">
+            {{ message }}
+        </div>
+    {% endflash %}
+    
+    <div class="alert alert-danger" data-validate-error>
+        <p data-message></p>
+    </div>
+
+    <fieldset>
+        <div class="form-group">
+            <div class="ui-input-group">
+                <input
+                    name="login"
+                    type="text"
+                    class="form-control"
+                    id="userSigninLogin" />
+                <span class="input-bar"></span>
+                <label for="userSigninLogin">{{ loginAttributeLabel }}</label>
+                <small>
+                    <span class="text-danger" data-validate-for="login" style="color: red"></span>
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="ui-input-group">
+                <input
+                    name="password"
+                    type="password"
+                    class="form-control"
+                    id="userSigninPassword" />
+                <span class="input-bar"></span>
+                <label for="userSigninPassword">Password</label>
+                <small>
+                    <span class="text-danger" data-validate-for="password" style="color: red"></span>
+                </small>
+            </div>
+        </div>
+
+        {% if rememberLoginMode == 'ask' %}
+        <div class="form-group">
+            <div class="checkbox">
+            <label><input name="remember" type="checkbox" value="1">Stay logged in</label>
+            </div>
+        </div>
+        {% endif %}
+
+        <button type="submit" class="btn btn-default">Sign in</button>
+
+    </fieldset>
+{{ form_close() }}
+

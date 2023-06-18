@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Playlist
+
+# Model Form Field configuration
+form: $/ovalsoft/courses/models/playlist/fields.yaml
+
+# Model Class name
+modelClass: Ovalsoft\Courses\Models\Playlist
+
+# Default redirect location
+defaultRedirect: ovalsoft/courses/playlists
+
+# Create page
+create:
+    title: Create Playlist
+    redirect: ovalsoft/courses/playlists/update/:id
+    redirectClose: ovalsoft/courses/playlists
+
+# Update page
+update:
+    title: Edit Playlist
+    redirect: ovalsoft/courses/playlists
+    redirectClose: ovalsoft/courses/playlists
+
+# Preview page
+preview:
+    title: Preview Playlist

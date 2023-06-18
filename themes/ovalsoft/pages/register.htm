@@ -1,0 +1,239 @@
+title = "Register"
+url = "/register"
+layout = "default"
+is_hidden = 0
+
+[account]
+redirect = 0
+paramCode = "code"
+forceSecure = 0
+requirePassword = 0
+==
+<?php
+use RainLab\Location\Models\Country;
+use Ovalsoft\Payment\Models\Settings;
+use Ovalsoft\Payment\Models\Payment as PaymentModel;
+use Auth;
+use URL;
+use Carbon\Carbon;
+
+public function onStart() {
+
+    $this['paystack_pk_key'] = Settings::get('paystack_pk_key');
+
+    $this['countries'] = Country::all();
+    $user = Auth::getUser();
+
+    if($user) {
+       $userIsPaidMember = $user->groups->contains('code', 'paid-users');
+       dd($userIsPaidMember);
+       if($userIsPaidMember)
+       return redirect('dashboard');
+    }
+    
+    // get group that is about to be registered for
+    // $slug = $this->param('slug');
+    $group =  \Rainlab\User\Models\UserGroup::where('code', 'paid-users')->first();
+    // $this['slug'] = $slug;
+    $this['group'] = $group;
+    
+}
+
+
+public function onPayment() {
+    $user = Auth::getUser();
+
+    $payment               = new PaymentModel;
+    $payment->reference    = post('reference');
+    $payment->user_id      = $user->id;
+    $payment->user_name    = $user->name.' '.$user->surname;
+    $payment->user_email   = $user->email;
+    $payment->amount       = post('amount');
+    $payment->order_number = PaymentModel::generateCode();
+    $payment->message      = post('message');
+    $payment->type         = 'Membership Payment';
+    $payment->created_at   = Carbon::now();
+    $payment->save();
+
+    Event::fire('ovalsoft.payment.membership.success', [$user, $payment]);
+
+    return redirect('/dashboard');
+}
+
+public function onRegister() {
+    
+        // register user
+        $this->account->onRegister();
+
+        // redirect to payment page if account type is 'paid-users'
+        // $slug = $this->param('slug');
+        // if($slug == 'paid-users') {
+        //     return redirect('membership-payment/'.$slug);
+        // }
+
+        return redirect('/registration-successful');
+
+    
+}
+
+public function onCheckEmail() {
+    return ['isTaken' => Auth::findUserByLogin(post('email')) ? 1 : 0];
+}
+
+
+function onCheckPasswordStrength() {
+    $password_length = 8;
+    $password = post('password');
+	$returnVal = True;
+
+	if ( strlen($password) < $password_length ) {
+		$returnVal = False;
+	}
+
+	if ( !preg_match("#[0-9]+#", $password) ) {
+		$returnVal = False;
+	}
+
+	if ( !preg_match("#[a-z]+#", $password) ) {
+		$returnVal = False;
+	}
+
+	if ( !preg_match("#[A-Z]+#", $password) ) {
+		$returnVal = False;
+	}
+
+    return ['passwordWeak' => $returnVal ? 1 : 0];
+
+}
+?>
+==
+<!-- Intro Section -->
+  <section class="inner-intro bg-img light-color overlay-before parallax-background">
+    <div class="container">
+      <div class="row title">
+        <h1 data-title="register"><span>register</span></h1>
+      </div>
+    </div>
+  </section>
+  <!-- Intro Section -->
+
+  <!-- Login Section -->
+  {% if not user %}
+  <div id="login" class="ptb ptb-xs-60 page-signin">
+    <div class="container">
+      <div class="row">
+        <div class="main-body">
+          <div class="body-inner">
+            <div class="card bg-white">
+              <div class="card-content">
+                <section class="logo text-center">
+                  <h2>Register</h2>
+                </section>
+
+                {% if not user %}
+
+                  {% partial account ~ '::register' countries=countries slug='registered' group=group %}
+
+                {% endif %}
+
+              </div>
+            </div>
+          <div class="additional-info"> <a href="{{ 'login' | page }}">Login</a><span class="divider-h"></span><a href="{{ '/reset-password' }}">Forgot your password?</a> </div>
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div class="ptb ptb-xs-60 page-signin">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 mb-30" style="display: flex; justify-content: center; align-items: center;">
+                <p>Consider upgrading your membership. </p>
+            </div>
+        </div>
+        <div class="row" style="display: flex; justify-content: center; padding: 20px;">
+            <div class="col-sm-12" style="display: flex; justify-content: start; min-height: 100px; padding: 20px; border: dashed 2px green; ">
+                <form data-request="onPayment" id="paymentForm">
+                    <input type="hidden" id="email_address" value="{{ user.email }}" required />
+                    <input type="hidden" id="amount" value="{{ group.amount }}" required />
+                    <input type="hidden" id="first_name" value="{{ user.name }}" required />
+                    <input type="hidden" id="last_name" value="{{ user.surname }}" required />
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <b>Name: </b> 
+                        </div>
+                        <div class="col-md-8">
+                            {{ user.name }} 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <b>Email: </b> 
+                        </div>
+                        <div class="col-md-8">
+                            {{ user.email }} 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <b>Amount: </b> 
+                        </div>
+                        <div class="col-md-8">
+                            &#8358; {{ group.amount|number_format(2, '.', ',') }} 
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div id="paystack-injects"></div>
+
+                    <div class="form-submit">
+                        <button class="btn btn-block btn-text" type="button" onclick="payWithPaystack()"> Upgrade </button>
+                    </div>
+                </form>
+            <script src="https://js.paystack.co/v1/inline.js"></script>
+
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  <!-- End Login Section -->
+
+
+<script>
+    function payWithPaystack() {
+
+        var name   = $('#name').val();
+        var email  = $('#email').val();
+        var amount = $('#amount').val();
+
+    let handler = PaystackPop.setup({
+        key: '{{ paystack_pk_key }}', // Replace with your public key
+        email: document.getElementById("email_address").value,
+        amount: document.getElementById("amount").value * 100,
+        ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+        // label: "Optional string that replaces customer email"
+        onClose: function(){
+        alert('Window closed.');
+        },
+        callback: function(response){
+        let message = 'Payment complete! Reference: ' + response.reference;
+
+            $("#paystack-injects").append(`<input type="hidden" name='reference' value='${response.reference}' />`);
+
+            $("#paystack-injects").append(`<input type="hidden" name='payment_trxref' value='${response.transaction}' />`);
+
+            $('form').request('onPayment', {data: {email: email, amount: amount, name: name, reference: response.reference, transaction: response.transaction, status: response.status, message: response.message }})
+        }
+    });
+
+    handler.openIframe();
+    }
+</script>

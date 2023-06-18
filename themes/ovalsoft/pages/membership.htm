@@ -1,0 +1,119 @@
+title = "Membership"
+url = "/membership"
+layout = "default"
+is_hidden = 0
+
+[session]
+security = "user"
+allowedUserGroups[] = "registered"
+redirect = "paid-membership"
+==
+<?php
+use Rainlab\User\Models\UserGroup as UserGroupModel;
+
+function onStart() {
+
+    $user = Auth::getUser();
+    if(!$user) {
+        return redirect('login');
+    }
+
+    $this['paidUsers'] = UserGroupModel::where('code', 'paid-users')->first();
+    $this['registeredUsers'] = UserGroupModel::where('code', 'registered')->first();
+}
+?>
+==
+<!-- CONTENT -->
+<!-- Intro Section -->
+<section class="inner-intro  padding bg-img1 overlay-dark light-color">
+	<div class="container">
+		<div class="row title">
+			<h1>Membership</h1>
+		</div>
+	</div>
+</section>
+<!-- End Intro Section -->
+
+<section class="page-section pricing-2 padding ptb-xs-60 columns_padding_25 pricing-style2 gray-bg" id="pricing_table2">
+	<div class="container">
+		<div class="row text-center pb-30 pb-x">
+			<div class="col-sm-12">
+				<div class="creative_heading">
+    				<h2><span>Paid</span> Membership</h2>
+				</div>
+
+			</div>
+		</div>
+		<!-- row end -->
+		<div class="row" style="display: flex; justify-content: center">
+			<!-- <div class="col-md-4 col-sm-6 col-xs-12 mb-xs-30">
+			    <div class="pricing_table">
+			        <div class="package_title">
+			            <div class="pricing-top bg-color">
+			                <p>
+			                    FREE
+			                </p>
+			            </div>
+			            <div class="package-price">
+			                <span class="currency-symbol">&#8358;</span><span class="price">{{registeredUsers.amount}}</span><span class="duration">/month</span>
+			            </div>
+			
+			        </div>
+			        <ul class="price_feature">
+			            <li>
+			                Lorem ipsum dolor
+			            </li>
+			            <li>
+			                Lorem ipsum dolor
+			            </li>
+			            <li>
+			                5 FTP USERS
+			            </li>
+			            <li>
+			                Lorem ipsum dolor
+			            </li>
+			        </ul>
+			        <div class="price_btn">
+			            <a href="{{ 'register' | page({'slug':'registered'}) }}" class="btn xplus-btn pricing">Join Now</a>
+			        </div>
+			    </div>
+			</div> -->
+			<!-- table end -->
+			<div class="col-md-4 col-sm-6 col-xs-12 mb-xs-30">
+				<div class="pricing_table shadow">
+					<div class="package_title">
+						<div class="pricing-top secondary_bg">
+							<p>
+								PAID
+							</p>
+						</div>
+						<div class="package-price">
+							<span class="currency-symbol">&#8358;</span><span class="price">{{paidUsers.amount}}</span><span class="duration">/month</span>
+						</div>
+
+					</div>
+					<ul class="price_feature">
+						<li>
+							Lorem ipsum dolor
+						</li>
+						<li>
+							Lorem ipsum dolor
+						</li>
+						<li>
+							5 FTP USERS
+						</li>
+						<li>
+							Lorem ipsum dolor
+						</li>
+					</ul>
+					<div class="price_btn">
+						<a href="{{ 'register' | page({'slug':'paid-users'}) }}" class="btn xplus-btn pricing">Join Now</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!-- row end -->
+	</div>
+</section>
+<!--End Contact-->

@@ -1,0 +1,57 @@
+title = "Login"
+url = "/login"
+layout = "default"
+is_hidden = 0
+
+[account]
+redirect = "dashboard"
+paramCode = "code"
+forceSecure = 0
+requirePassword = 0
+==
+<?php
+function onStart()
+{
+    if (Auth::check()) {
+        return redirect('courses');
+    }
+}
+?>
+==
+<!-- Intro Section -->
+<section class="inner-intro bg-img light-color overlay-before parallax-background">
+<div class="container">
+    <div class="row title">
+    <h1 data-title="login"><span>login</span></h1>
+    </div>
+</div>
+</section>
+<!-- Intro Section --> 
+<!-- Login Section -->
+<div id="login" class="ptb ptb-xs-60 page-signin">
+<div class="container">
+    <div class="row">
+    <div class="main-body">
+        <div class="body-inner">
+        <div class="card bg-white">
+            <div class="card-content">
+            <section class="logo text-center">
+                <h2>Login</h2>
+            </section>
+            
+            
+            {% if not user %}
+
+                {% partial account ~ '::signin' %}
+
+            {% endif %}
+
+            </div>
+        </div>
+        <div class="additional-info"> <a href="{{ 'register' | page }}">Register</a><span class="divider-h"></span><a href="{{ 'reset-password' }}">Forgot your password?</a> </div>
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+<!-- End Login Section -->

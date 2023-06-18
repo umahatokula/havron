@@ -1,0 +1,24 @@
+title = "Search results"
+url = "/search"
+layout = "default"
+is_hidden = 0
+
+[searchResults]
+resultsPerPage = 10
+showProviderBadge = 1
+noResultsMessage = "Your search did not return any results."
+visitPageMessage = "Visit page"
+==
+<h2>Search results for {{ searchResults.query }}</h2>
+
+{% set results = searchResults.results %}
+
+{% for result in results %}
+    {# Display all results #}
+    {% partial searchResults ~ '::searchresult.htm' result = result %}
+{% else %}
+    {# No results found #}
+    {% partial searchResults ~ '::no-results.htm' %}
+{% endfor %}
+
+{% partial searchResults ~ '::pagination.htm' results = results %}

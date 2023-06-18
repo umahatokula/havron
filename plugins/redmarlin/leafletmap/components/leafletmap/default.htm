@@ -1,0 +1,30 @@
+-<script src="/plugins/redmarlin/leafletmap/assets/js/leaflet.js"></script>
+
+<script>
+  	var map = L.map('leafmap', { scrollWheelZoom: {{ __SELF__.property('scrollProtection') }} })
+  		.setView([{{ __SELF__.property('coords') }}], {{ __SELF__.property('zoom') }});
+  	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  		attribution: 'Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://mapbox.com">Mapbox</a>',
+  		maxZoom: 18
+  	}).addTo(map);
+	map.once('focus', function() { map.scrollWheelZoom.enable(); });
+/*	{% if __SELF__.property('scrollProtection') %}
+		map.dragging.disable();
+		map.touchZoom.disable();
+		map.doubleClickZoom.disable();
+		map.scrollWheelZoom.disable();
+		map.keyboard.disable();
+		map.zoomControl = false;
+	{% else %}
+		map.dragging.enable();
+		map.touchZoom.enable();
+		map.doubleClickZoom.enable();
+		map.scrollWheelZoom.enable();
+		map.keyboard.enable();
+		map.zoomControl = true;
+	{% endif %} */
+	{% if __SELF__.property('markerCoords') %}
+	  	var marker = L.marker([{{ __SELF__.property('markerCoords') }}]).addTo(map);
+		marker.bindPopup("{{ __SELF__.property('markerText') }}");
+	{% endif %}
+</script>

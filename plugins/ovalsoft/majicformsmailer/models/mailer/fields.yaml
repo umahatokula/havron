@@ -1,0 +1,49 @@
+fields:
+
+    # all_registrants:
+    #     label: Send to ALL registrants
+    #     type: switch
+    #     comment: If YES, selected event will be disregarded
+    #     on: Yes
+    #     off: No
+
+    group:
+        label: Select a group
+        type: dropdown
+                
+    subject:
+        label: Message subject
+        type: text
+        placeholder: Type the email subject here
+        required: true
+
+    use_template:
+        label: Use email template
+        type: switch
+        comment: If YES, email will be sent using a template
+        on: Yes
+        off: No
+        default: Yes
+
+    mail_template:
+        label: Select an a mail template
+        type: dropdown
+        trigger:
+            field: use_template
+            condition: checked
+            action: show
+
+    message:
+        label: 'Type the message'
+        size: ''
+        oc.commentPosition: ''
+        span: full
+        type: richeditor
+        size: giant
+        trigger:
+            field: use_template
+            condition: checked
+            action: hide
+        required: true
+        # toolbarButtons: bold|italic|underline|strikeThrough|subscript|superscript|fontFamily|fontSize|||color|emoticons|inlineStyle|paragraphStyle|||paragraphFormat|align|formatOL|formatUL|outdent|indent|quote|insertHR|-|insertLink|insertImage|insertVideo|insertAudio|insertFile|insertTable|undo|redo|clearFormatting|selectAll|html
+        # dependsOn: mail_template

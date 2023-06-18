@@ -1,0 +1,91 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+secondaryTabs:
+    fields:
+        paystack_sk_key:
+            label: Paystack Secret Key
+            span: left
+            commentAbove: Get a Secret Key from https://payment.com/developers
+            tab: 'Paystack'
+        paystack_pk_key:
+            label: Paystack Public Key
+            span: right
+            commentAbove: Get a Public Key from https://payment.com/developers
+            tab: 'Paystack'
+        paystack_countries:
+            label: 'pixel.shop::lang.fields.allowed_countries'
+            comment: 'pixel.shop::lang.messages.allowed_countries'
+            type: checkboxlist
+            cssClass: inline-options
+            tab: 'Paystack'
+
+        flutterwave_sk_key:
+            label: Flutterwave Secret Key
+            span: left
+            commentAbove: Get a Secret Key from https://payment.com/developers
+            tab: 'Flutterwave'
+        flutterwave_pk_key:
+            label: Flutterwave Public Key
+            span: right
+            commentAbove: Get a Public Key from https://payment.com/developers
+            tab: 'Flutterwave'
+        flutterwave_countries:
+            label: 'pixel.shop::lang.fields.allowed_countries'
+            comment: 'pixel.shop::lang.messages.allowed_countries'
+            type: checkboxlist
+            cssClass: inline-options
+            tab: 'Flutterwave'
+
+        # payu_sk_key:
+        #     label: Payu Secret Key
+        #     span: left
+        #     commentAbove: Get a Secret Key from https://payment.com/developers
+        #     tab: 'Payu'
+        # payu_pk_key:
+        #     label: Payu Public Key
+        #     span: right
+        #     commentAbove: Get a Public Key from https://payment.com/developers
+        #     tab: 'Payu'
+        # payu_countries:
+        #     label: 'pixel.shop::lang.fields.allowed_countries'
+        #     comment: 'pixel.shop::lang.messages.allowed_countries'
+        #     type: checkboxlist
+        #     cssClass: inline-options
+        #     tab: 'Payu'
+
+        # remita_sk_key:
+        #     label: Remita Secret Key
+        #     span: left
+        #     commentAbove: Get a Secret Key from https://payment.com/developers
+        #     tab: 'Remita'
+        # remita_pk_key:
+        #     label: Remita Public Key
+        #     span: right
+        #     commentAbove: Get a Public Key from https://payment.com/developers
+        #     tab: 'Remita'
+        # remita_countries:
+        #     label: 'pixel.shop::lang.fields.allowed_countries'
+        #     comment: 'pixel.shop::lang.messages.allowed_countries'
+        #     type: checkboxlist
+        #     cssClass: inline-options
+        #     tab: 'Remita'
+
+        # paypal_sandbox_account:
+        #     label: Sandbox account
+        #     span: auto
+        #     tab: 'Paypal'
+        # paypal_client_id:
+        #     label: Client ID
+        #     span: auto
+        #     tab: 'Paypal'
+        # paypal_secret:
+        #     label: Secret
+        #     span: auto
+        #     tab: 'Paypal'
+        # paypal_countries:
+        #     label: 'pixel.shop::lang.fields.allowed_countries'
+        #     comment: 'pixel.shop::lang.messages.allowed_countries'
+        #     type: checkboxlist
+        #     cssClass: inline-options
+        #     tab: 'Paypal'

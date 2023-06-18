@@ -1,0 +1,81 @@
+title = "Dashboard"
+url = "/dashboard"
+layout = "default"
+is_hidden = 0
+
+[session]
+security = "user"
+allowedUserGroups[] = "paid-users"
+allowedUserGroups[] = "registered"
+redirect = "login"
+==
+use Ovalsoft\Payment\Models\UserProduct;
+
+function onStart() {
+    $user = Auth::getUser();
+    // dd($user);
+    if ($user)
+    $this['myCourses'] = UserProduct::where('user_id', $user->id)->get();
+}
+==
+<!-- Intro Section -->
+<section class="inner-intro bg-img light-color overlay-before parallax-background">
+    <div class="container">
+        <div class="row title">
+            <h1 data-title="Blog"><span>dashboard</span></h1>
+        </div>
+    </div>
+</section>
+<!-- Intro Section -->
+<section class="course-section__block padding ptb-xs-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="block-title v-line" style="margin-bottom: 80px;">
+                    <h2><span>My</span> Dashboard</h2>
+                </div>
+                <h3><u>Courses</u></h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row">
+                
+                    {% if myCourses | length %}
+                        {% for course in myCourses %}
+                        {% set course = course.item %}
+                        
+                            <div class="col-md-4 col-sm-6 mb-30">
+                                <div class="courses-block img-scale">
+
+                                    <figure class="img__block">
+                                        <img src="{{ course.course_image.path ? course.course_image.path : 'http://placehold.it/393x280' }}" alt="{{ course.name }}" class="img-responsive" width="100%">
+
+                                    </figure>
+                                    <div class="courses-content__block">
+                                        <h3 class="item-title">{{ course.name }}</h3>
+                                        <ul class="courses-info">
+                                            <li class="courses-info__price"><strong class="color">PAID</strong></li>
+                                            <li>
+                                                <span> <a href="{{ 'course-content' | page({ slug: course.slug }) }}" class="">VIEW CONTENT</a></span>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% endfor %} 
+                    {% else %}
+                        <div class="col-12 mb-30" style="display: flex; justify-content: center; align-items: center;">
+                            <p>You have no purchases</p>
+                        </div>
+                    {% endif %}  
+
+                </div>
+                <!-- Pagination Nav -->
+            </div>
+        </div>
+
+    </div>
+</section>

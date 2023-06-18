@@ -1,0 +1,6 @@
+<select class="input-sm form-full" id="program_selections" name="program_selections" style="border: 1px solid black;">
+<option value="">Select a program</option>
+{% for program in programs %}
+    <option value="{{ program.id }}">{{ program.name }}</option>
+{% endfor %}
+</select>

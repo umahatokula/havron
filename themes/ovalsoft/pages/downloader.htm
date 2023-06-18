@@ -1,0 +1,15 @@
+title = "Downloader"
+url = "/trigger-download/:pathtofile"
+is_hidden = 0
+==
+function onStart()
+{
+    $pathToFile = storage_path('app/'.$this->param('pathtofile'));
+    $fileName = 'download.pdf';
+    $headers = [
+        'Content-Type' => 'application/pdf'
+    ];
+
+    return Response::download($pathToFile, $fileName, $headers);
+}
+==

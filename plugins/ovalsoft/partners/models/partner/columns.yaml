@@ -1,0 +1,13 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    name:
+        label: Name
+        span: auto
+        searchable: true
+    programCount:
+        label: Partners
+        relation: programs
+        useRelationCount: true

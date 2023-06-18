@@ -1,0 +1,80 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: Name
+        span: auto
+    slug:
+        label: Slug
+        preset: name
+        span: auto
+    profile_picture:
+        label: Profile Picture
+        type: mediafinder
+        mode: image
+        span: auto
+    email:
+        label: Email
+        span: auto
+    phone:
+        label: Phone Number
+        span: auto
+    address:
+        label: Address
+        span: auto
+    website:
+        label: Website
+        span: auto
+    description:
+        label: Description
+        type: richeditor
+        toolbarButtons: bold|italic
+        size: huge
+        span: auto
+    facebook:
+        label: Facebook
+        span: auto
+    instagram:
+        label: Instagram
+        span: auto
+    twitter:
+        label: Twitter
+        span: auto
+    linkedin:
+        label: Linkedin
+        span: auto
+    skype:
+        label: Skype
+        span: auto
+    education:
+        label: Education
+        span: auto
+        type: repeater
+        titleFrom: title_when_collapsed
+        form:
+            fields:
+                institution:
+                    label: Institution
+                    type: text
+    experience:
+        label: Experience
+        span: auto
+        type: repeater
+        titleFrom: title_when_collapsed
+        form:
+            fields:
+                entry:
+                    label: Experience
+                    type: text
+    awards:
+        label: Awards
+        span: auto
+        type: repeater
+        titleFrom: title_when_collapsed
+        form:
+            fields:
+                award_name:
+                    label: Award Name
+                    type: text

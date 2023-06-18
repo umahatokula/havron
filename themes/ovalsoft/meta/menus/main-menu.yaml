@@ -1,0 +1,249 @@
+items:
+    -
+        title: Home
+        nesting: null
+        type: cms-page
+        url: null
+        code: ''
+        reference: home
+        cmsPage: null
+        replace: null
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: 'About Us'
+        nesting: null
+        type: cms-page
+        url: null
+        code: ''
+        reference: about-us
+        cmsPage: null
+        replace: null
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: 'Havron eLearning Hub'
+        nesting: null
+        type: cms-page
+        url: null
+        code: ''
+        reference: courses
+        cmsPage: null
+        replace: null
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+        items:
+            -
+                title: 'Data Visualization with Excel'
+                nesting: null
+                type: url
+                url: /course/data-visualization-excel
+                code: ''
+                reference: null
+                cmsPage: null
+                replace: null
+                viewBag:
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+            -
+                title: 'Fundamentals Of Microsoft Excel'
+                nesting: null
+                type: url
+                url: /course/fundamentals-microsoft-excel
+                code: ''
+                reference: null
+                cmsPage: null
+                replace: null
+                viewBag:
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+            -
+                title: 'Our second course'
+                nesting: null
+                type: url
+                url: /course/second-course
+                code: ''
+                reference: null
+                cmsPage: null
+                replace: null
+                viewBag:
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+    -
+        title: Partners
+        nesting: null
+        type: cms-page
+        url: null
+        code: ''
+        reference: partners
+        cmsPage: null
+        replace: null
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+        items:
+            -
+                title: 'University of Washington Department of Global Health E-Learning'
+                nesting: null
+                type: url
+                url: /partner/university-washington-department-global-health-e-Learning
+                code: ''
+                reference: null
+                cmsPage: null
+                replace: null
+                viewBag:
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+            -
+                title: 'James Lind Institute India'
+                nesting: null
+                type: url
+                url: /partner/James-lind-institute-india
+                code: ''
+                reference: null
+                cmsPage: null
+                replace: null
+                viewBag:
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+            -
+                title: 'UNICAF University'
+                nesting: null
+                type: url
+                url: /partner/unicaf-university
+                code: ''
+                reference: null
+                cmsPage: null
+                replace: null
+                viewBag:
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+            -
+                title: 'Texila American University, India'
+                nesting: null
+                type: url
+                url: /partner/texila-america-university-india
+                code: ''
+                reference: null
+                cmsPage: null
+                replace: null
+                viewBag:
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+            -
+                title: 'New menu item'
+                nesting: null
+                type: url
+                url: /partner/nexus-university
+                code: ''
+                reference: null
+                cmsPage: null
+                replace: null
+                viewBag:
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+    -
+        title: 'Shop For Courses'
+        nesting: null
+        type: url
+        url: '#'
+        code: ''
+        reference: null
+        cmsPage: null
+        replace: null
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+        items:
+            -
+                title: 'Havron Courses'
+                nesting: null
+                type: cms-page
+                url: null
+                code: ''
+                reference: products
+                cmsPage: null
+                replace: null
+                viewBag:
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+            -
+                title: 'Courses From Partners'
+                nesting: null
+                type: cms-page
+                url: null
+                code: ''
+                reference: partners
+                cmsPage: null
+                replace: null
+                viewBag:
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+    -
+        title: 'Contact Us'
+        nesting: null
+        type: cms-page
+        url: null
+        code: ''
+        reference: contact-us
+        cmsPage: null
+        replace: null
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: 'My Dashboard'
+        nesting: null
+        type: url
+        url: '/#'
+        code: ''
+        reference: null
+        cmsPage: null
+        replace: null
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+        items:
+            -
+                title: 'My Dashboard'
+                nesting: null
+                type: cms-page
+                url: null
+                code: ''
+                reference: dashboard
+                cmsPage: null
+                replace: null
+                viewBag:
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+            -
+                title: 'Upgrade Membership'
+                type: cms-page
+                code: ''
+                reference: membership
+                viewBag:
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+name: 'Main Menu'

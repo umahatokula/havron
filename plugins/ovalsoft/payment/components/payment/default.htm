@@ -1,0 +1,57 @@
+
+<div class="row">
+    <div class="col-sm-5">
+        <div class="check_form_right bg-color light-color">
+            <div class="heading-box pb-15 ">
+                <h2><span>your</span> order</h2>
+                <span class="b-line l-left secondary_bg"></span>
+
+            </div>
+
+            {% if cart.items | length %}
+            <div class="product_order">
+                <ul>
+                    {% for item in cart.items %}
+                    <li>
+                        {{ item.title }}<span>{{ item.price|currency }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <ul>
+                    <li style="color: #FFAF36">
+                        Subtotal:<span>{{ cart.subtotal|currency }}</span>
+                    </li>
+                    <li style="color: #FFAF36">
+                        Discount<span> {{ cart.coupon['amount'] | currency }}</span>
+                    </li>
+                    <li style="color: #FFAF36">
+                        Total:<span>{{ cart.total|currency }}</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="romana_select_method ">
+
+                <select name="country" style="width: 100%; color: #000;" data-request="onSelectCountry">
+                    <option selected style="color: #000;">Select Country</option>
+                    {% for country in countries %}
+                    <option value="{{country.code}}" style="color: #000;">{{country.name}}</option>
+                    {% endfor %}
+                </select>
+
+                <div id="paymentMethods">
+                    <select style="width: 100%; color: #000;" disabled>
+                        <option selected style="color: #000;" >Select Payment Method</option>
+                    </select>
+                </div>
+
+            </div>
+            {% else %}
+            <p>There are no Items in your cart</p>
+            {% endif %}
+            
+        </div>
+    </div>
+    <div class="col-sm-7" id="paymentForm">
+    </div>
+</div>

@@ -1,0 +1,23 @@
+
+
+.ui-input-group > textarea:focus {
+	border-bottom: 1px solid #CBD5DD;
+	box-shadow: 0 0 0 #fff;
+}
+
+.ui-input-group > textarea {
+	padding-left: 0;
+	padding-right: 0;
+	border: none;
+	box-shadow: 0 0 0 #fff;
+	border: none;
+	border-bottom: 1px solid #CBD5DD;
+	margin: 0;
+}
+
+.btn-default:hover,
+.color-switch .owl-controls .owl-page span,
+.tags li a {
+    background-color: #0d3929;
+    color: #FFF;
+}

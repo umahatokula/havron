@@ -1,0 +1,89 @@
+title = "Cart"
+url = "/cart/:step?"
+layout = "shop"
+is_hidden = 0
+
+[cartContainer]
+productPage = "product"
+returnPage = "return"
+
+[session]
+security = "user"
+allowedUserGroups[] = "paid-users"
+allowedUserGroups[] = "registered"
+redirect = "login"
+==
+use Pixel\Shop\Models\Coupon as CouponModel;
+use Rainlab\User\Models\UserGroup as UserGroupModel;
+use Pixel\Shop\Components\CartTrait;
+
+function onStart() {
+    $this['user'] = Auth::getUser() ?? null;
+}
+
+function onCheckCoupon() {
+    $user = Auth::getUser();
+    $found = $user->groups->first(function($model) {
+        return $model->code == 'paid-users';
+    });
+    if ($found) {    
+        return $this->cartContainer->onCheckCoupon();
+    }
+
+    $coupon = CouponModel::where('code', post('coupon_code'))->first();
+    $user_groups = DB::table('users_groups')->where('user_id', $user->id)->lists('user_group_id');
+
+    if($coupon) {    
+        if (in_array($coupon->user_group_id, $user_groups)) {    
+            return $this->cartContainer->onCheckCoupon();
+        } else {
+            Flash::error('This coupon applies to paid members only.');
+        }
+    } else {
+        Flash::error('Please enter a valid coupon code');
+    }
+}
+==
+
+
+        <!--End mainmenu area-->
+        <!-- END HEADER -->
+        <!-- CONTENT -->
+        <!-- Intro Section -->
+        <section class="inner-intro bg-img light-color overlay-before parallax-background">
+            <div class="container">
+                <div class="row title">
+                    <h1 data-title="Title"><span>Cart</span></h1>
+                </div>
+            </div>
+        </section>
+        <!-- Intro Section -->
+        <div class="faq ptb-80 ptb-xs-60">
+            <div class="container">
+                <h3>Cart</h3>
+                
+                <div class="cart_page_area sp100">
+                    <div class="container">
+                        <div class="cart_table_wraper">
+                            {% partial '@cart' user=user %}
+                        </div>
+                    </div>
+                    <!-- container End -->
+                </div>
+            </div>
+        </div>
+        <!-- FOOTER -->
+	
+{% put scripts %}
+<script>
+	jQuery.extend(jQuery.validator.messages, {
+		required: "{{ 'pixel.shop::validation.jquery.required'|trans }}",
+		email: "{{ 'pixel.shop::validation.jquery.email'|trans }}",
+		maxlength: jQuery.validator.format(
+			"{{ 'pixel.shop::validation.jquery.maxlength'|trans }}"),
+		minlength: jQuery.validator.format(
+			"{{ 'pixel.shop::validation.jquery.minlength'|trans }}"),
+	});
+
+</script>
+{% endput %}

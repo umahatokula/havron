@@ -1,0 +1,41 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    reference:
+        label: Reference
+        description: Transaction reference
+
+    name:
+        label: Name
+        description: Name of user making payment
+        type: text
+
+    email:
+        label: Email
+        description: Email of user making payment
+        type: text
+
+    phone:
+        label: Phone
+        description: Phone of user making payment
+        type: text
+
+    amount:
+        label: Amount
+        description: Amount paid
+        type: number
+
+    country:
+        label: rainlab.location::lang.country.label
+        type: dropdown
+        span: left
+        placeholder: rainlab.location::lang.country.select
+
+    state:
+        label: rainlab.location::lang.state.label
+        type: dropdown
+        span: right
+        dependsOn: country
+        placeholder: rainlab.location::lang.state.select

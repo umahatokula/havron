@@ -1,0 +1,47 @@
+{% if lecturers|length %}
+<section class="ptb-40 mb-xs-40">
+    <div class="container">
+        <div class="row pb-30">
+            <div class="col-sm-6 mb-20">
+                <h2>Facilitators</h2>
+            </div>
+        </div>
+        <div class="row mt-80 text-center">
+            {% for lecturer in lecturers %}
+                <div class="col-sm-3 mb-xs-30">
+                    <div class="box-hover img-scale">
+                        <figure>
+                            <a href="{{ 'lecturer' | page({ slug: lecturer.slug }) }}">
+                                <img src="{{ lecturer.profile_picture | media}}" alt="">
+                            </a>
+                        </figure>
+
+                        <div class="team-block">
+                            <strong>{{lecturer.name}}</strong>
+                            <span>{{lecturer.designation}}</span>
+                            <hr class="small-divider border-white">
+                            <ul class="social-icons">
+                                <li>
+                                    <a href="{{url(lecturer.facebook)}}" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a href="{{lecturer.twitter}}" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a href="{{lecturer.instagram}}" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a href="{{lecturer.linkedin}}" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a href="{{lecturer.skype}}" target="_blank"><i class="fa fa-skype" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}

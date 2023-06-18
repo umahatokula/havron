@@ -1,0 +1,59 @@
+title = "Contact Us"
+url = "/contact-us"
+layout = "default"
+is_hidden = 0
+
+[contactForm]
+loadJS = 1
+==
+<!-- Intro Section -->
+<section class="inner-intro  padding bg-img1 overlay-dark light-color">
+    <div class="container">
+        <div class="row title">
+            <h1>Contact</h1>
+            <div class="page-breadcrumb"><a>Home</a>/Contact</div>
+        </div>
+    </div>
+</section><!-- End Intro Section -->
+<p><br></p><!-- Contact Section -->
+<section class="padding ptb-xs-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="headeing pb-30">
+                    <h2>Get in Touch</h2>
+                </div><!-- Contact FORM -->
+                {% component 'contactForm' %}
+            </div>
+            <div class="col-sm-4 contact">
+                <div class="headeing pb-20">
+                    <h2>Contact Info</h2>
+                </div>
+                <div class="contact-info">
+                    <ul class="info">
+                        <li>
+                            <div class="icon ion-ios-location">&nbsp;<br></div>
+                            <div class="content">
+                                <p>address line 1</p>
+                                <p>address line 2</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="icon ion-android-call">&nbsp;<br></div>
+                            <div class="content">
+                                <p>+2348186071228</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="icon ion-ios-email">&nbsp;<br></div>
+                            <div class="content">
+                                <p>support@havron360.org</p>
+                                <p>&nbsp;<br></p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div><!-- Map Section -->
+</section><!-- Contact Section -->

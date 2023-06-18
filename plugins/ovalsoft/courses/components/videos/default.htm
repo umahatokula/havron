@@ -1,0 +1,40 @@
+{% if __SELF__.hasError %}
+    {% partial '@error' message="Video is unavailable" %}
+{% else %}
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="video">
+
+                <div class="videoTitle">
+                  {% if displayTitle %}
+
+                    {% if titlePosition == 'top' %}
+                      <h3>{{ __SELF__.title }}</h3>
+                    {% endif %}
+
+                  {% endif %}
+                </div>
+                
+
+                <div class="videoTitle">
+                  <div class="iframe-container">
+                    <iframe width="{{ videoIframeWidth }}" height="{{ videoIframeHeight }}" src="https://www.youtube.com/embed/{{ __SELF__.youtube_video_id }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                  </div>
+                </div>
+
+                <div class="videoTitle">
+                {% if displayTitle %}
+
+                  {% if titlePosition == 'bottom' %}
+                    <h3>{{ __SELF__.title }}</h3>
+                  {% endif %}
+
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endif %}

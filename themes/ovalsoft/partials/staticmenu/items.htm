@@ -1,0 +1,16 @@
+{% for item in items if not item.viewBag.isHidden %}
+    <li class="{{ item.isActive ? 'active' : '' }}">
+        {% if item.url %}
+            <a href="{{ item.url }}" {{ item.viewBag.isExternal ? 'target="_blank"' }} class=" {{ item.isChildActive ? 'child-active' : '' }} {{ item.viewBag.cssClass }}"> {% if item.items %} <span class="submenu-button"></span> {% endif %}
+                {{ item.title }}
+            </a>
+            {% if item.items %}<span class="submenu-button"></span>{% endif %}
+        {% else %}
+            <span>{{ item.title }}</span>
+        {% endif %}
+
+        {% if item.items %}
+            <ul class="dropdown-menu">{% partial "staticMenu::items" items=item.items %}</ul>
+        {% endif %}
+    </li>
+{% endfor %}

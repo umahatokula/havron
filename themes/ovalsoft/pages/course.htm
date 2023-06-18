@@ -1,0 +1,48 @@
+title = "Course"
+url = "/course/:slug"
+layout = "default"
+is_hidden = 0
+
+[courseDetails]
+slug = "{{ :slug }}"
+==
+use Ovalsoft\Courses\Models\Course as CourseModel;
+
+function onStart() {
+  $slug = $this->param('slug');
+  $course = CourseModel::where('slug', $slug)->first();
+  $this['course'] = $course;
+}
+==
+<!-- Intro Section -->
+<section class="inner-intro bg-img light-color overlay-before parallax-background">
+    <div class="container">
+        <div class="row title">
+            <h1 data-title="Blog"><span>courses</span></h1>
+        </div>
+    </div>
+</section>
+<!-- Intro Section -->
+<section class="course-section__block padding ptb-xs-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 mb-30">
+                <div class="course__details_block">
+                    <div class="course__figure_img">
+                        <img src="{{ course.course_image.path ? course.course_image.path : 'http://placehold.it/1920x500' }}" alt="{{ course.name }}" class="img-responsive" width="100%">
+                    </div>
+                    <div class="course__text_details mt-40">
+                        <h1 class="mb-20">{{ course.name }}</h1>
+                    </div>
+                    <div class="course__content_block mt-30">
+                        <h2 class="mb-20">Description</h2>
+                        <p>{{ course.description | raw }}</p>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>

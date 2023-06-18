@@ -1,0 +1,119 @@
+<form 
+data-request="onPayment" 
+data-request-validate 
+data-request-flash
+data-request-success="makePayment();" 
+class="form-horizontal" id="regForm">
+
+<div class="alert alert-danger" data-validate-error>
+    <p data-message></p>
+</div>
+
+<div class="check_form_left common_input">
+    <div class="heading-box pb-30 text-right">
+        <h2><span>Flutter</span>wave</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <input type="text" id="name" name="name" placeholder="Name" value="{{ user ? user.name }}">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <input type="email" id="email" name="email" placeholder="Email" value="{{ user ? user.email }}">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <input type="text" id="phone" name="phone" placeholder="Phone" value="{{ user ? user.phone }}">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <input type="text" id="amount" name="amount" placeholder="Amount" value="{{ cart.total }}" readonly>
+        </div>
+    </div>
+</div>
+
+
+<div id="injects"></div>
+
+
+<script src="https://checkout.flutterwave.com/v3.js"></script>
+
+<div class="romana_select_method ">
+    <button onclick="makePayment()" type="button" class="btn-text white-btn">place order</button>
+</div>
+
+<img class="text-center" src="{{ 'flutterwave.png' | media }}" height="100px" />
+
+{{ form_close() }}
+
+
+<script>
+  function makePayment() {
+
+    var name       = $('#name').val();
+    var email       = $('#email').val();
+    var phone       = $('#phone').val();
+    var amount      = $('#amount').val();
+
+    if (name.length == 'undefined' || name.length == 0) { 
+        alert("Please enter your name");    
+        return false;
+    }
+
+    if (email.length == 'undefined' || email.length == 0) { 
+    alert("Please enter your email");    
+    return false;
+    } 
+
+    if (amount == undefined) { 
+    alert("Please enter an amount");    
+    return false;
+    } 
+
+    if ( amount.length == 0) { 
+    alert("Please enter an amount");    
+    return false;
+    } 
+
+    var d = new Date();
+
+    FlutterwaveCheckout({
+      public_key: "{{ flutterwave_pk_key }}",
+      tx_ref: d.getTime(),
+      amount: amount,
+      currency: "NGN",
+      country: "NG",
+      payment_options: "card, mobilemoneyghana, ussd",
+      meta: {
+        consumer_id: 23,
+        consumer_mac: "92a3-912ba-1192a",
+      },
+      customer: {
+        email: email,
+        phone_number: phone,
+        name: name,
+      },
+      callback: function (response) {
+        console.log(response);
+
+        $("#injects").append(`<input type="hidden" name='reference' value='${response.reference}' />`);
+
+        $("#injects").append(`<input type="hidden" name='payment_trxref' value='${response.transaction}' />`);
+
+        $('form').request('onPayment', {data: {email: email, amount: amount, name: name, reference: response.reference, transaction: response.transaction, status: response.status, message: response.message }})
+      },
+      onclose: function() {
+        // close modal
+      },
+      customizations: {
+        title: "Havron eStore",
+        description: "Payment for items in cart",
+        logo: "{{ 'logo.png' | media }}",
+      },
+    });
+  }
+</script>

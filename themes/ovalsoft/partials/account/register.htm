@@ -1,0 +1,223 @@
+[viewBag]
+==
+{% if canRegister %}
+
+    {% if slug == 'paid-users' %}
+        <div class="alert alert-info">
+            <h4 class="alert-heading">Note!</h4>
+            <p>You will be redirected to the payment page after registration.</p>
+        </div>
+    {% endif %}
+
+    <form class="form-horizontal ng-pristine ng-valid">
+
+    {% flash %}
+        <div class="alert alert-{{ type == 'error' ? 'danger' : type }}">{{ message }}</div>
+    {% endflash %}
+
+    <fieldset>
+        <div class="form-group">
+            <div class="ui-input-group">
+                <input
+                    name="name"
+                    type="text"
+                    class="form-control"
+                    id="registerName" />
+                <span class="input-bar"></span>
+                <label>Full Name</label>
+                <small>
+                    <span class="text-danger" data-validate-for="name" style="color: red"></span>
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="ui-input-group">
+                <input
+                    name="email"
+                    type="email"
+                    class="form-control"
+                    id="registerEmail"
+                    placeholder=""
+                    data-request="onCheckEmail"
+                    data-request-success="$('#loginTaken').toggle(!!data.isTaken)"
+                    data-track-input
+                    style="margin-bottom: 0; border: none; border-bottom: 1px solid #CBD5DD; height: 35px; font-size: 13px;" />
+                <span class="input-bar"></span>
+                <label for="registerEmail">Email</label>
+                <small>
+                    <span class="text-danger" data-validate-for="email" style="color: red"></span>
+                </small>
+                <div id="loginTaken" class="alert alert-danger" style="display: none">
+                    Sorry, this email name is already taken.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="ui-input-group">
+                <input
+                    name="phone"
+                    type="number"
+                    class="form-control"
+                    id="phone"
+                    placeholder=""
+                    style="margin-bottom: 0; border: none; border-bottom: 1px solid #CBD5DD; height: 35px; font-size: 13px;" />
+                <span class="input-bar"></span>
+                <label for="phone">Phone Number</label>
+                <small>
+                    <span class="text-danger" data-validate-for="phone" style="color: red"></span>
+                </small>
+            </div>
+        </div>
+
+        {% if loginAttribute == "username" %}
+            <div class="form-group">
+                <div class="ui-input-group">
+                    <input
+                        name="username"
+                        type="text"
+                        class="form-control"
+                        id="registerUsername"
+                        placeholder="" />
+                    <span class="input-bar"></span>
+                    <label for="registerUsername">Username</label>
+                    <small>
+                        <span class="text-danger" data-validate-for="username" style="color: red"></span>
+                    </small>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            <div class="ui-input-group">
+                <input
+                    name="password"
+                    type="password"
+                    class="form-control"
+                    id="registerPassword"
+                    placeholder="" />
+                <span class="input-bar"></span>
+                <label for="registerPassword">Password</label>
+                <small>
+                    Password must be minimum of 8 characters
+                </small>
+                <small>
+                    <span class="text-danger" data-validate-for="password" style="color: red"></span>
+                </small>
+                <div id="passwordWeak" class="alert alert-danger" style="display: none">
+                    Sorry, this password is weak
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="ui-input-group">
+                <input
+                    name="password_confirmation"
+                    type="password"
+                    class="form-control"
+                    id="password_confirmation"
+                    placeholder="" />
+                <span class="input-bar"></span>
+                <label for="registerPassword">Retype Password</label>
+                <small>
+                    <span class="text-danger" data-validate-for="password_confirmation" style="color: red"></span>
+                </small>
+            </div>
+        </div>
+
+
+        <div class="form-group" style="margin-top: 10px;">
+            <div class="ui-input-group">
+                
+                <select class="input-sm form-full" id="country" name="country" style="border: 1px solid #E5E5E5;">
+                    <option value="">Select a country</option>
+                    {% for country in countries %}
+                    <option value="{{ country.id }}">{{ country.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <span class="input-bar"></span>
+                <label for="registerPassword" style="font-size: 12px; top: -25px; ">Country</label>
+                <small>
+                    <span class="text-danger" data-validate-for="country" style="color: red"></span>
+                </small>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="ui-input-group">
+                <input
+                    name="shipping_address"
+                    type="text"
+                    class="form-control"
+                    id="shipping_address" />
+                <span class="input-bar"></span>
+                <label>Shipping Address</label>
+                <small>
+                    <span class="text-danger" data-validate-for="shipping_address" style="color: red"></span>
+                </small>
+            </div>
+        </div>
+
+        <button onclick="submitForm()" class="btn btn-default btn-block">Register</button>
+
+
+        <div id="paystack-injects"></div>
+
+        <script src="https://js.paystack.co/v1/inline.js"></script>
+
+    </fieldset>
+    {{ form_close() }}
+{% else %}
+    <!-- Registration is disabled. -->
+{% endif %}
+
+<script>
+    function submitForm() {
+        $('form').request('onRegister', {success: function(data) {
+            console.log(data)
+            payWithPaystack()
+            
+        }})
+    }
+    
+    function payWithPaystack() {
+        var name   = $('#registerName').val();
+        var email  = $('#registerEmail').val();
+        var phone  = $('#phone').val();
+        var amount = 5000; 
+        // alert(name)
+
+        var handler = PaystackPop.setup({
+        key: '{{ paystack_pk_key }}',
+        email: name,
+        email: email,
+        amount: amount * 100,
+        phone: phone,
+        currency: "NGN",
+        metadata: {},
+        callback: function(response) {
+
+                $("#paystack-injects").append(`<input type="hidden" name='reference' value='${response.reference}' />`);
+
+                $("#paystack-injects").append(`<input type="hidden" name='payment_trxref' value='${response.transaction}' />`);
+
+                $('form').request('onPayment', {data: {email: email, amount: amount, name: name, reference: response.reference, transaction: response.transaction, status: response.status, message: response.message }})
+
+                $.request('onPayment', {
+                    success: function() {
+                        console.log('Finished!');
+                    }
+                })
+
+
+        },
+        onClose: function(){
+            console.log('window closed');
+        }
+        });
+        handler.openIframe();
+    }
+</script>

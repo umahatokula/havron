@@ -1,0 +1,39 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: Name
+        span: left
+    slug:
+        label: Slug
+        preset: name
+        span: right
+    form_is_external:
+        label: Does this partner have an external link?
+        type: radio
+        span: left
+        quickselect: true
+        default: no_link
+        options:
+            yes: Yes
+            no_link: No
+    external_link:
+        label: External Link
+        span: right
+        trigger:
+            field: form_is_external
+            condition: value[yes]
+            action: show
+    image:
+        label: Partner Image
+        type: mediafinder
+        mode: image
+        span: left
+    information:
+        label: Information
+        type: richeditor
+        toolbarButtons: fullscreen|bold|italic|underline|strikeThrough|subscript|superscript|fontFamily|fontSize|||color|emoticons|inlineStyle|paragraphStyle|paragraphFormat|align|formatOL|formatUL|outdent|indent|quote|insertHR|insertLink|insertImage, insertVideo|insertAudio|insertFile|insertTable|undo|redo|clearFormatting|selectAll|html
+        size: huge
+        span: full

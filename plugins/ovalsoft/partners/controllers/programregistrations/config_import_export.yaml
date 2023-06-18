@@ -1,0 +1,8 @@
+export:
+    title: Export
+    modelClass: Ovalsoft\Partners\Models\ProgramRegistrationExport
+    list: $/ovalsoft/partners/models/programregistrationexport/columns.yaml
+    redirect: ovalsoft/partners/programRegistrations
+
+# export:
+#     useList: true

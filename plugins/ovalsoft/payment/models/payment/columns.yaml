@@ -1,0 +1,38 @@
+columns:
+    reference:
+        label: Ref
+        type: text
+        searchable: true
+        sortable: true
+    order_number:
+        label: Order Number
+        type: partial
+        searchable: true
+        sortable: true
+        path: ~/plugins/ovalsoft/payment/models/payment/_order_id.htm
+    user_name:
+        label: Name
+        relation: user
+        select: name
+        searchable: true
+        sortable: true
+    user_email:
+        label: Email
+        relation: user
+        select: email
+        searchable: true
+        sortable: true
+    type:
+        label: Type
+        type: text
+        searchable: true
+        sortable: true
+    amount:
+        label: Amount
+        type: partial
+        path: ~/plugins/ovalsoft/payment/models/payment/_amount_column.htm
+    created_at:
+        label: 'Payment Date'
+        type: date
+        searchable: true
+        sortable: true

@@ -1,0 +1,47 @@
+title = "Checkout"
+url = "/checkout/:step?"
+layout = "shop"
+is_hidden = 0
+
+[cartContainer]
+productPage = "product"
+returnPage = "return"
+
+[Payment]
+==
+<?php
+use Ovalsoft\Payment\Models\Settings;
+function onStart() {
+    $this['methods_list'] = Settings::get('paystack_sk_key');
+    // dd($this['methods_list']);
+}
+?>
+==
+<!-- Intro Section -->
+<section class="inner-intro  padding bg-img1 overlay-dark">
+    <div class="container">
+        <div class="row title">
+            <h1>Checkout</h1>
+            <div class="page-breadcrumb">
+                <a>Home</a>/ <span>Checkout</span>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Intro Section -->
+
+<section class="padding ptb-xs-60">
+    <div class="romana_chect_out_form_area sp">
+        <div class="container">
+            <form action="#">
+                <div class="romana_check_out_form">
+                    {% component 'Payment' cart=cart %}
+                </div>
+            </form>
+            <!-- column End -->
+        </div>
+        <!-- container End -->
+    </div>
+</section>
+
+<!--End Contact-->

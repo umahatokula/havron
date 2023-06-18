@@ -1,0 +1,17 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+
+    partner:
+        label: Partner
+        modelClass: Ovalsoft\Partners\Models\ProgramRegistration
+        conditions: partner_id in (:filtered)
+        nameFrom: name
+        options: getPartnerOptions
+
+    published_at:
+        label: Date
+        type: daterange
+        conditions: created_at >= ':after' AND created_at <= ':before'

@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Program
+
+# Model Form Field configuration
+form: $/ovalsoft/partners/models/program/fields.yaml
+
+# Model Class name
+modelClass: Ovalsoft\Partners\Models\Program
+
+# Default redirect location
+defaultRedirect: ovalsoft/partners/programs
+
+# Create page
+create:
+    title: Create Program
+    redirect: ovalsoft/partners/programs/update/:id
+    redirectClose: ovalsoft/partners/programs
+
+# Update page
+update:
+    title: Edit Program
+    redirect: ovalsoft/partners/programs
+    redirectClose: ovalsoft/partners/programs
+
+# Preview page
+preview:
+    title: Preview Program

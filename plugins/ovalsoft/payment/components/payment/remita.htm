@@ -1,0 +1,117 @@
+<form 
+data-request="onPayment" 
+data-request-validate 
+data-request-flash
+data-request-success="makePayment();" 
+class="form-horizontal" id="regForm">
+
+<div class="alert alert-danger" data-validate-error>
+    <p data-message></p>
+</div>
+
+<div class="check_form_left common_input">
+    <div class="heading-box pb-30 text-right">
+        <h2><span></span>Remita</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <input type="text" id="fname" name="fname" placeholder="First Name" value="{{ user ? user.name }}">
+        </div>
+        <div class="col-sm-6">
+            <input type="text" id="lname" name="lname" placeholder="Last Name" value="">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <input type="email" id="email" name="email" placeholder="Email" value="{{ user ? user.email }}">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <input type="text" id="phone" name="phone" placeholder="Phone" value="{{ user ? user.phone }}">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <input type="text" id="amount" name="amount" placeholder="Amount" value="{{ cart.total }}" readonly>
+        </div>
+    </div>
+</div>
+
+<div id="injects"></div>
+
+<script src="http://www.remitademo.net/payment/v1/remita-pay-inline.bundle.js"></script>
+
+<div class="romana_select_method ">
+    <button onclick="makePayment()" type="button" class="btn-text white-btn">place order</button>
+</div>
+
+<img class="text-center" src="{{ 'remita.png' | media }}" height="30px" />
+
+{{ form_close() }}
+
+<script>
+    function makePayment() {
+
+        var fname       = $('#fname').val();
+        var lname       = $('#lname').val();
+        var email       = $('#email').val();
+        var phone       = $('#phone').val();
+        var amount      = $('#amount').val();
+
+        if (fname.length == 'undefined' || fname.length == 0) { 
+            alert("Please enter your first name");    
+            return false;
+        }
+
+        if (lname.length == 'undefined' || lname.length == 0) { 
+            alert("Please enter your last name");    
+            return false;
+        }
+
+        if (email.length == 'undefined' || email.length == 0) { 
+        alert("Please enter your email");    
+        return false;
+        } 
+
+        if (amount == undefined) { 
+        alert("Please enter an amount");    
+        return false;
+        } 
+
+        if ( amount.length == 0) { 
+        alert("Please enter an amount");    
+        return false;
+        } 
+
+        var d = new Date();
+
+        var paymentEngine = RmPaymentEngine.init({
+            key: "{{ remita_pk_key }}",
+            customerId: "140700251",
+            firstName: fname,
+            lastName: lname,
+            email: email,
+            narration: "Payment Description",
+            amount: amount,
+            onSuccess: function (response) {
+                console.log('callback Successful Response', response);
+
+                $("#injects").append(`<input type="hidden" name='reference' value='${response.reference}' />`);
+
+                $("#injects").append(`<input type="hidden" name='payment_trxref' value='${response.transaction}' />`);
+
+                $('form').request('onPayment', {data: {email: email, amount: amount, name: name, reference: response.reference, transaction: response.transaction, status: response.status, message: response.message }})
+            },
+            onError: function (response) {
+                console.log('callback Error Response', response);
+            },
+            onClose: function () {
+                console.log("closed");
+            }
+        });
+        paymentEngine.showPaymentWidget();
+    }
+
+</script>

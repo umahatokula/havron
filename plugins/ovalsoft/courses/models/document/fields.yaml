@@ -1,0 +1,27 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    title:
+        label: Title
+        span: left
+    slug:
+        label: Slug
+        preset: title
+        span: left
+    number_of_pages:
+        label: Number of pages
+        type: number
+        span: left
+    description:
+        label: ovalsoft.courses::lang.plugin.models.course.fields.description
+        type: richeditor
+        toolbarButtons: fullscreen|bold|italic|underline|strikeThrough|subscript|superscript|fontFamily|fontSize|||color|emoticons|inlineStyle|paragraphStyle
+        size: huge
+        span: left
+    file_path:
+        label: File
+        type: fileupload
+        mode: file
+        span: left

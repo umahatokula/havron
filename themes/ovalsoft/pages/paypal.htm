@@ -1,0 +1,42 @@
+title = "Paypal"
+url = "/paypal"
+layout = "default"
+is_hidden = 0
+
+[paypal]
+item_name = "My Product"
+amount = 1
+type = "buynow"
+==
+<!-- Intro Section -->
+<section class="inner-intro  padding bg-img1 overlay-dark light-color">
+	<div class="container">
+		<div class="row title">
+			<h1>Contact</h1>
+			<div class="page-breadcrumb">
+				<a>Home</a>/<span>Contact</span>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Intro Section -->
+<!-- Contact Section -->
+<section class="padding ptb-xs-60">
+	<div class="container">
+
+		<div class="row">
+
+			<div class="col-sm-8">
+                {% component 'paypal' %}
+			</div>
+
+			<div class="col-sm-4 contact">
+			
+			</div>
+
+		</div>
+	</div>
+	<!-- Map Section -->
+
+</section>
+<!-- Contact Section -->

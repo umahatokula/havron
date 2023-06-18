@@ -1,0 +1,8 @@
+<div class="select_option_one">
+    <select name="payment_type" style="width: 100%; color: #000;" data-request="onSelectPaymentType">
+        <option selected style="color: #000;">Select Payment Method</option>
+        {% for method in methods %}
+        <option value="{{method}}" style="color: #000;">{{method}}</option>
+        {% endfor %}
+    </select>
+</div>

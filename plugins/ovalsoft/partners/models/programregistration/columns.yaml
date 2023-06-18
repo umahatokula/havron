@@ -1,0 +1,21 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    partner_id:
+        label: School Of Interest
+        relation: partner
+        select: name
+    fname:
+        label: First Name
+        searchable: true
+    lname:
+        label: Last Name
+        searchable: true
+    phone:
+        label: Phone
+        searchable: true
+    email:
+        label: Email
+        searchable: true

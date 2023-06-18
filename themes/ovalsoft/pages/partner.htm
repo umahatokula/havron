@@ -1,0 +1,61 @@
+title = "Partner"
+url = "/partner/:slug"
+layout = "default"
+is_hidden = 0
+
+[partnersDetails]
+slug = "{{:slug}}"
+
+[programsComponent]
+partnerSlug = "{{:slug}}"
+==
+==
+<section class="inner-intro bg-img light-color overlay-before parallax-background">
+    <div class="container">
+        <div class="row title">
+            <h1 data-title="Title"><span>Title</span></h1>
+        </div>
+    </div>
+</section>
+<!-- Intro Section -->
+<div class="faq ptb-80 ptb-xs-60">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-12 anim-section mb-30">
+                <h2>{{ partner.name }}</h2>
+                <p>{{ partner.information | raw }}.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-9 anim-section mb-30">
+                <h3>Programs</h3>
+                <div class="panel-group" id="accordion">
+                    {% for program in programs %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ program.id }}" aria-expanded="false">{{ program.name }} <i class="fa fa-plus collape-plus"></i></a></h4>
+                        </div>
+                        <div id="collapse-{{ program.id }}" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p> {{ program.details | raw }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <a href="/program-registration/{{ partner.slug }}">
+                    <div class="single_top__block text-center" style="padding: 0;">
+                        <div class="single_text__block" style="margin-top: 20px; background: #225643; color: #ffffff; min-height: 180px; padding: 10px; display: flex; align-items: center;">
+                        <h2>Register Today!</h2>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>

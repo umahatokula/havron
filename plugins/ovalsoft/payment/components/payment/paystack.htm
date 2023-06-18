@@ -1,0 +1,102 @@
+<form 
+data-request="onPayment" 
+data-request-validate 
+data-request-flash
+data-request-success="payWithPaystack();" 
+class="form-horizontal" id="regForm">
+
+<div class="alert alert-danger" data-validate-error>
+    <p data-message></p>
+</div>
+
+<div class="check_form_left common_input">
+    <div class="heading-box pb-30 text-right">
+        <h2><span>Pay</span>stack</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <input type="text" id="name" name="name" placeholder="Name" value="{{ user ? user.name }}">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <input type="email" id="email" name="email" placeholder="Email" value="{{ user ? user.email }}">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <input type="text" id="phone" name="phone" placeholder="Phone" value="{{ user ? user.phone }}">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <input type="text" id="amount" name="amount" placeholder="Amount" value="{{ cart.total }}" readonly>
+        </div>
+    </div>
+</div>
+
+
+<div id="paystack-injects"></div>
+
+
+<script src="https://js.paystack.co/v1/inline.js"></script>
+
+<div class="romana_select_method mb-4" style="margin-bottom: 20px">
+    <button onclick="payWithPaystack()" type="button" class="btn-text white-btn">place order</button>
+</div>
+
+<img class="text-center" src="{{ 'paystack.png' | media }}" height="30px" />
+
+{{ form_close() }}
+
+<script>
+function payWithPaystack(){
+var name       = $('#name').val();
+var email       = $('#email').val();
+var phone       = $('#phone').val();
+var amount      = $('#amount').val();
+
+if (name.length == 'undefined' || name.length == 0) { 
+    alert("Please enter your name");    
+    return false;
+} 
+
+if (email.length == 'undefined' || email.length == 0) { 
+    alert("Please enter your email");    
+    return false;
+} 
+
+if (amount == undefined) { 
+    alert("Please enter an amount");    
+    return false;
+} 
+
+if ( amount.length == 0) { 
+    alert("Please enter an amount");    
+    return false;
+} 
+
+var handler = PaystackPop.setup({
+  key: '{{ paystack_pk_key }}',
+  email: name,
+  email: email,
+  amount: amount * 100,
+  phone: phone,
+  currency: "NGN",
+  metadata: {},
+  callback: function(response) {
+
+        $("#paystack-injects").append(`<input type="hidden" name='reference' value='${response.reference}' />`);
+
+        $("#paystack-injects").append(`<input type="hidden" name='payment_trxref' value='${response.transaction}' />`);
+
+        $('form').request('onPayment', {data: {email: email, amount: amount, name: name, reference: response.reference, transaction: response.transaction, status: response.status, message: response.message }})
+  },
+  onClose: function(){
+      console.log('window closed');
+  }
+});
+handler.openIframe();
+}
+</script>

@@ -1,0 +1,39 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    title:
+        label: ovalsoft.courses::lang.plugin.models.video.fields.title
+        span: left
+    slug:
+        label: Slug
+        preset: title
+        span: left
+    source:
+        label: ovalsoft.courses::lang.plugin.models.video.fields.source
+        type: dropdown
+        span: left
+    youtube_video_id:
+        label: ovalsoft.courses::lang.plugin.models.video.fields.youtube_video_id
+        span: left
+    order:
+        label: ovalsoft.courses::lang.plugin.models.video.fields.order
+        type: number
+        span: left
+        default: 50
+    description:
+        label: ovalsoft.courses::lang.plugin.models.video.fields.description
+        type: richeditor
+        toolbarButtons: fullscreen|bold|italic|underline|strikeThrough|subscript|superscript|fontFamily|fontSize|||color|emoticons|inlineStyle|paragraphStyle
+        size: huge
+        span: left
+    categories:
+        label: ovalsoft.courses::lang.plugin.models.video.fields.categories
+        type: relation
+        span: left
+    is_published:
+        label: ovalsoft.courses::lang.plugin.models.video.fields.published
+        type: switch
+        default: true
+

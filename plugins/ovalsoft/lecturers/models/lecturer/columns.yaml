@@ -1,0 +1,18 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    name:
+        label: Name
+        span: auto
+    slug:
+        label: Slug
+        preset: name
+        span: auto
+    email:
+        label: Email
+        span: auto
+    phone:
+        label: Phone Number
+        span: auto

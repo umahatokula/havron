@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Lecturer
+
+# Model Form Field configuration
+form: $/ovalsoft/lecturers/models/lecturer/fields.yaml
+
+# Model Class name
+modelClass: Ovalsoft\Lecturers\Models\Lecturer
+
+# Default redirect location
+defaultRedirect: ovalsoft/lecturers/lecturers
+
+# Create page
+create:
+    title: Create Lecturer
+    redirect: ovalsoft/lecturers/lecturers/update/:id
+    redirectClose: ovalsoft/lecturers/lecturers
+
+# Update page
+update:
+    title: Edit Lecturer
+    redirect: ovalsoft/lecturers/lecturers
+    redirectClose: ovalsoft/lecturers/lecturers
+
+# Preview page
+preview:
+    title: Preview Lecturer

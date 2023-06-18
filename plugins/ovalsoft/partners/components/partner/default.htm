@@ -1,0 +1,7 @@
+{% for partner in partners %}
+<ul>
+    <li>{{partner.name}}</li>
+    <li><img src="{{partner.image}}" /></li>
+    <li>{{partner.information | raw}}</li>
+</ul>
+{% endfor %}

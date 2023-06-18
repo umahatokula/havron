@@ -1,0 +1,44 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    title:
+        label: Title
+        span: left
+    slug:
+        label: Slug
+        preset: title
+        span: right
+    source:
+        label: Source
+        type: radio
+        span: left
+        quickselect: true
+        default: file_upload
+        options:
+            file_upload: File Upload
+            remote: Remote Source
+    file_path:
+        label: File Path
+        type: fileupload
+        mode: file
+        span: right
+        trigger:
+            field: source
+            condition: value[file_upload]
+            action: show
+    remote_path:
+        label: Remote URL
+        span: right
+        trigger:
+            field: source
+            condition: value[remote]
+            action: show
+    description:
+        label: ovalsoft.courses::lang.plugin.models.video.fields.description
+        type: richeditor
+        toolbarButtons: fullscreen|bold|italic|underline|strikeThrough|subscript|superscript|fontFamily|fontSize|||color|emoticons|inlineStyle|paragraphStyle
+        size: huge
+        span: left
+    

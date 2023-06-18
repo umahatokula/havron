@@ -1,0 +1,37 @@
+<?php if ($this->user->hasAccess('ovalsoft.partners.create_new_registration')): ?>
+    <div data-control="toolbar">
+        <!-- <a
+            href="<?= Backend::url('ovalsoft/partners/programregistrations/create') ?>"
+            class="btn btn-primary oc-icon-plus">
+            New Program Registration
+        </a> -->
+
+        <button
+            class="btn btn-danger oc-icon-trash-o"
+            disabled="disabled"
+            onclick="$(this).data('request-data', { checked: $('.control-list').listWidget('getChecked') })"
+            data-request="onDelete"
+            data-request-confirm="Are you sure you want to delete the selected Program Registrations?"
+            data-trigger-action="enable"
+            data-trigger=".control-list input[type=checkbox]"
+            data-trigger-condition="checked"
+            data-request-success="$(this).prop('disabled', 'disabled')"
+            data-stripe-load-indicator>
+            Delete selected
+        </button>
+
+        <div class="btn-group">
+            <a
+                href="<?= Backend::url('ovalsoft/partners/programregistrations/export') ?>"
+                class="btn btn-default oc-icon-download">
+                Export
+            </a>
+            <a
+                href="<?= Backend::url('ovalsoft/partners/programregistrations/import') ?>"
+                class="btn btn-default oc-icon-upload">
+                Import
+            </a>
+        </div>
+
+    </div>
+<?php endif ?>

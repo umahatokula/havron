@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Category
+
+# Model Form Field configuration
+form: $/ovalsoft/courses/models/category/fields.yaml
+
+# Model Class name
+modelClass: Ovalsoft\Courses\Models\Category
+
+# Default redirect location
+defaultRedirect: ovalsoft/courses/categories
+
+# Create page
+create:
+    title: Create Category
+    redirect: ovalsoft/courses/categories/update/:id
+    redirectClose: ovalsoft/courses/categories
+
+# Update page
+update:
+    title: Edit Category
+    redirect: ovalsoft/courses/categories
+    redirectClose: ovalsoft/courses/categories
+
+# Preview page
+preview:
+    title: Preview Category

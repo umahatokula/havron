@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-sm-5">
+        <div class="box-resume">
+            <div class="center-top doctor-info"> <img src="{{ lecturer.profile_picture | media }}" alt=""
+                    class="img-responsive"> </div>
+            <ul>
+                <li><strong>Name</strong>{{ lecturer.name }}</li>
+                <li><strong>Address</strong>{{ lecturer.address }}</li>
+                <li><strong>Email</strong> <a href="mailto:{{ lecturer.email }}" title=""
+                        class="a-email">{{ lecturer.email }}</a></li>
+                <li><strong>Phone</strong>{{ lecturer.phone }}</li>
+                <li><strong>Website</strong> {{ lecturer.website }}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-6 col-sm-offset-1 pt-xs-60">
+        <h2>{{ lecturer.name }}</h2>
+        <p>{{ lecturer.description | raw }}</p>
+        <div class="we-do">
+            <div class="doctor-details">
+                {% if lecturer.education | length %}
+                <div class="desc"> <i class="fa fa-graduation-cap bg-color"></i>
+                    <h4>Education</h4>
+                    {% for education in lecturer.education %}
+                    <p>{{ education.institution }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% if lecturer.experience | length %}
+                <div class="desc"> <i class="fa ion-ribbon-b bg-color"></i>
+                    <h4>Experience</h4>
+                    {% for experience in lecturer.experience %}
+                    <p>{{ experience.entry }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                {% if lecturer.awards | length %}
+                <div class="desc pb-80"> <i class="fa fa-trophy bg-color"></i>
+                    <h4>AWARDS &amp; RECOGNITION</h4>
+                    {% for award in lecturer.awards %}
+                    <p>{{ award.award_name }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

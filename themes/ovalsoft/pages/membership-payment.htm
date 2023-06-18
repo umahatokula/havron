@@ -1,0 +1,136 @@
+title = "Membership Payment"
+url = "/membership-payment/:slug"
+layout = "default"
+is_hidden = 0
+
+==
+<?php
+use Ovalsoft\Payment\Models\Settings;
+use Ovalsoft\Payment\Models\Payment as PaymentModel;
+use Auth;
+use Carbon\Carbon;
+
+public function onStart() {
+    
+    $slug = $this->param('slug');
+    $this['group'] =  \Rainlab\User\Models\UserGroup::where('code', $slug)->first();
+    // dd($group);
+    $this['paystack_pk_key'] = Settings::get('paystack_pk_key');
+    
+}
+
+public function onPayment() {
+    $user = Auth::getUser();
+
+    $payment               = new PaymentModel;
+    $payment->reference    = post('reference');
+    $payment->user_id      = $user->id;
+    $payment->user_name    = $user->name.' '.$user->surname;
+    $payment->user_email   = $user->email;
+    $payment->amount       = post('amount');
+    $payment->order_number = PaymentModel::generateCode();
+    $payment->message      = post('message');
+    $payment->type         = 'Membership Payment';
+    $payment->products     = 'Paid Membership';
+    $payment->created_at   = Carbon::now();
+    $payment->save();
+
+    Event::fire('ovalsoft.payment.membership.success', [$user, $payment]);
+
+    return redirect('/dashboard');
+}
+?>
+==
+<!-- Intro Section -->
+<section class="inner-intro bg-img light-color overlay-before parallax-background">
+    <div class="container">
+        <div class="row title">
+            <h1 data-title="about us"><span>Membership Payment</span></h1>
+        </div>
+    </div>
+</section>
+<!-- Intro Section -->
+<!-- About Section -->
+<div id="about-section" class="pt-80 pb-80 pt-xs-60">
+    <div class="container">
+        <div class="row" style="display: flex; justify-content: center; padding: 20px;">
+            <div class="col-sm-12" style="display: flex; justify-content: start; min-height: 100px; padding: 20px; border: dashed 2px green; ">
+                <form data-request="onPayment" id="paymentForm">
+                    <input type="hidden" id="email_address" value="{{ user.email }}" required />
+                    <input type="hidden" id="amount" value="{{ group.amount }}" required />
+                    <input type="hidden" id="first_name" value="{{ user.name }}" required />
+                    <input type="hidden" id="last_name" value="{{ user.surname }}" required />
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <b>Name: </b> 
+                        </div>
+                        <div class="col-md-8">
+                            {{ user.name }} 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <b>Email: </b> 
+                        </div>
+                        <div class="col-md-8">
+                            {{ user.email }} 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <b>Amount: </b> 
+                        </div>
+                        <div class="col-md-8">
+                            {{ group.amount }} 
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div id="paystack-injects"></div>
+
+                    <div class="form-submit">
+                        <button class="btn btn-block btn-text" type="button" onclick="payWithPaystack()"> Pay </button>
+                    </div>
+                </form>
+            <script src="https://js.paystack.co/v1/inline.js"></script>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- About Section End-->
+
+<script>
+
+function payWithPaystack() {
+
+    var name   = $('#name').val();
+    var email  = $('#email').val();
+    var amount = $('#amount').val();
+
+  let handler = PaystackPop.setup({
+    key: '{{ paystack_pk_key }}', // Replace with your public key
+    email: document.getElementById("email_address").value,
+    amount: document.getElementById("amount").value * 100,
+    ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+    // label: "Optional string that replaces customer email"
+    onClose: function(){
+      alert('Window closed.');
+    },
+    callback: function(response){
+      let message = 'Payment complete! Reference: ' + response.reference;
+
+        $("#paystack-injects").append(`<input type="hidden" name='reference' value='${response.reference}' />`);
+
+        $("#paystack-injects").append(`<input type="hidden" name='payment_trxref' value='${response.transaction}' />`);
+
+        $('form').request('onPayment', {data: {email: email, amount: amount, name: name, reference: response.reference, transaction: response.transaction, status: response.status, message: response.message }})
+    }
+  });
+
+  handler.openIframe();
+}
+</script>

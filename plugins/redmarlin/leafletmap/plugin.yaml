@@ -1,0 +1,6 @@
+plugin:
+    name: 'redmarlin.leafletmap::lang.plugin.name'
+    description: 'redmarlin.leafletmap::lang.plugin.description'
+    author: RedMarlin
+    icon: oc-icon-globe
+    homepage: 'http://redmarlin.net'

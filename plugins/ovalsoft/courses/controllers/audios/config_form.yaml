@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Audio
+
+# Model Form Field configuration
+form: $/ovalsoft/courses/models/audio/fields.yaml
+
+# Model Class name
+modelClass: Ovalsoft\Courses\Models\Audio
+
+# Default redirect location
+defaultRedirect: ovalsoft/courses/audios
+
+# Create page
+create:
+    title: Create Audio
+    redirect: ovalsoft/courses/audios/update/:id
+    redirectClose: ovalsoft/courses/audios
+
+# Update page
+update:
+    title: Edit Audio
+    redirect: ovalsoft/courses/audios
+    redirectClose: ovalsoft/courses/audios
+
+# Preview page
+preview:
+    title: Preview Audio

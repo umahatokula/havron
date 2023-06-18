@@ -1,0 +1,64 @@
+<?php
+ /*****************************************************************************
+ ******************************************************************************
+ ************************************ Mailer *****************************
+ *                                                                            *
+ *                          Developed By Ovalsoft Tokula                         *
+ *                                                                            *
+ *****************************************************************************/
+?>
+<div class="container">
+    <div class="row">
+        <!-- Start callout -->
+        <div class="callout fade in callout-info no-icon no-subheader">
+            <div class="header">
+                <h3>Send Mail</h3>
+            </div>
+            <div class="content">
+                <p>This plugin allows you to send a mail ONE selected group per time</p>
+            </div>
+        </div>
+        <!-- End callout -->
+
+        <!-- Start form -->
+        <?= Form::open(['id' => 'form']) ?>
+
+        <div class="layout-row">
+            <?= $widget->render() ?>
+        </div>
+
+        <div class="form-group pull-right" id="sendAll">
+            <button 
+            data-request="onSendMail" 
+            data-request-success="document.getElementById('form').reset();"
+            data-load-indicator="Creating Mail..."
+            class="btn btn-primary" 
+            type="submit">Send Message Now</button>
+        </div>
+
+
+        <hr>
+
+        <h4>You can send a test mail through this form</h4>
+        <!-- Test email -->
+        <div class="form-group">
+            <!-- test email label -->
+            <label for="email">Type your email here</label>
+            <!-- end test email label -->
+            <input type="text" class="form-control" name="testEmail" data-request="onCheckTestEmail"
+                data-request-success="if( data.correct == 1) { $('#sendAll').hide() }else{$('#sendAll').show() }"
+                data-track-input id="testEmail"
+                placeholder="<?= Lang::get('lilessam.mailsender::lang.test.email_placeholder') ?>">
+        </div>
+        <!-- End test mail -->
+        <div class="form-group pull-right">
+            <button 
+            data-request="onSendMail"
+            data-load-indicator="Creating Mail..."
+            type="submit" 
+            class="btn btn-primary">Send Test Mail</button>
+        </div>
+        <?= Form::close() ?>
+        <!-- End form -->
+    </div>
+</div>

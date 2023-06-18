@@ -1,0 +1,69 @@
+title = "Courses"
+url = "/courses"
+layout = "default"
+is_hidden = 0
+
+[course]
+isPublished = 1
+coursePage = "course"
+==
+use Ovalsoft\Payment\Models\UserProduct;
+
+function onStart() {
+    $this['user'] = Auth::getUser() ?? null;
+    if($this['user'])
+    $this['paidResources'] = UserProduct::where('user_id', $this['user']->id)->get()->lists('product_id');
+}
+==
+<!-- Intro Section -->
+<section class="inner-intro bg-img light-color overlay-before parallax-background">
+    <div class="container">
+        <div class="row title">
+            <h1 data-title="Blog"><span>courses</span></h1>
+        </div>
+    </div>
+</section>
+<!-- Intro Section -->
+<section class="course-section__block padding ptb-xs-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9">
+                <div class="row">
+                
+                    {% for course in courses %}
+                    
+
+                            <div class="col-md-4 col-sm-6 mb-30">
+                                <div class="courses-block img-scale">
+
+                                    <figure class="img__block">
+                                        <img src="{{ course.course_image.path ? course.course_image.path : 'http://placehold.it/393x280' }}" alt="{{ course.name }}" class="img-responsive" width="100%">
+
+                                    </figure>
+                                    <div class="courses-content__block">
+                                        <h3 class="item-title"><a href="{{ coursePage }}/{{ course.slug  }}"> {{ course.name }}</a></h3>
+                                        <ul class="courses-info">
+                                            <li class="courses-info__price"><strong class="color">NGN {{ course.price }} </strong></li>
+                                            <li>
+                                                <span> <a href="product/{{ course.slug }}" class="color">BUY</a></span>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                    {% endfor %}  
+
+                </div>
+                <!-- Pagination Nav -->
+            </div>
+            <!--Sidebar-->
+            <div class="col-sm-3 mt-sm-60">
+            
+            </div>
+            <!--Sidebar-->
+        </div>
+
+    </div>
+</section>

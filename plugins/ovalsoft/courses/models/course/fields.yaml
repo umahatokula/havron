@@ -1,0 +1,75 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: Name
+        span: left
+    slug:
+        label: Slug
+        preset: name
+        span: left
+    code:
+        label: SKU (Code)
+        span: left
+    currency:
+        label: 'pixel.shop::lang.fields.currency'
+        type: dropdown
+        cssClass: oc-icon-usd
+        span: left
+        tab: 'pixel.shop::lang.fields.details'
+    price:
+        label: Price
+        span: left
+    old_price:
+        label: Old Price
+        span: left
+    description:
+        label: ovalsoft.courses::lang.plugin.models.course.fields.description
+        type: richeditor
+        toolbarButtons: fullscreen|bold|italic|underline|strikeThrough|subscript|superscript|fontFamily|fontSize|||color|emoticons|inlineStyle|paragraphStyle|paragraphFormat|align|formatOL|formatUL|outdent|indent|quote|insertHR|insertLink|insertImage, insertVideo|insertAudio|insertFile|insertTable|undo|redo|clearFormatting|selectAll|html
+        size: huge
+        span: left
+    is_published:
+        label: 
+        type: switch
+        comment: Publish or not
+        on: ovalsoft.courses::lang.plugin.models.course.fields.on
+        off: ovalsoft.courses::lang.plugin.models.course.fields.off
+        default: 1
+        span: left
+    course_image:
+        label: Course Image
+        type: fileupload
+        mode: image
+        imageHeight: 276
+        imageWidth: 393
+        thumbOptions:
+            mode: crop
+            offset:
+                - 0
+                - 0
+            quality: 90
+            sharpen: 0
+            interlace: false
+            extension: auto
+        span: left
+tabs:
+    fields:
+        playlists:
+            label: Playlist
+            type: relation
+            tab: Video Playlists
+            nameFrom: name
+        audios:
+            label: Audio
+            type: relation
+            tab: Audio
+            nameFrom: title
+        documents:
+            label: Documents
+            type: relation
+            tab: Documents
+            nameFrom: title
+

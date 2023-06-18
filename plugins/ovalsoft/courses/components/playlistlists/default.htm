@@ -1,0 +1,17 @@
+{% if __SELF__.hasError %}
+    {% partial '@error' message="Video gallery is unavailable" %}
+{% else %}
+
+    {% if playlists %}
+
+    <ul>
+      {% for playlist in playlists %}
+        <li>
+          <a href="{{ playlistPage | page ({ slug: playlist.slug }) }}">{{ playlist.name }}</a>
+        </li>      
+      {% endfor %}
+    </ul>
+
+    {% endif %}
+    
+{% endif %}

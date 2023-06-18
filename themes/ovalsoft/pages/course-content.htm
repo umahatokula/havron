@@ -1,0 +1,149 @@
+title = "Course Content"
+url = "/course-content/:slug"
+layout = "default"
+is_hidden = 0
+==
+<?php
+use Ovalsoft\Payment\Models\UserProduct;
+use Ovalsoft\Courses\Models\Course as CourseModel;
+use Pixel\Shop\Models\Item;
+
+function onStart() {
+
+  $this->addCss('/plugins/ovalsoft/courses/assets/css/tabs.css');
+  $this->addJs('/plugins/ovalsoft/courses/assets/js/tabs.js');
+
+  $slug = $this->param('slug');
+  $item = Item::where('slug', $slug)->first();
+//   dd($item->course);
+  $this['course'] = $item->course;
+  
+  $this['user'] = Auth::getUser() ?? null;
+  if($this['user'])
+  $this['paidResources'] = UserProduct::where('user_id', $this['user']->id)->lists('product_id');
+  
+  if (! in_array($item->id, $this['paidResources'])) {
+      return redirect('404');
+  }
+}
+?>
+==
+<!-- Intro Section -->
+<section class="inner-intro bg-img light-color overlay-before parallax-background">
+    <div class="container">
+        <div class="row title">
+            <h1 data-title="Blog"><span>courses</span></h1>
+        </div>
+    </div>
+</section>
+<!-- Intro Section -->
+<section class="course-section__block padding ptb-xs-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 mb-30">
+                <div class="course__details_block">
+                    <div class="course__figure_img">
+                        <img src="{{ course.course_image.path ? course.course_image.path : 'http://placehold.it/1920x500' }}"
+                            alt="{{ course.name }}" class="img-responsive" width="100%">
+                    </div>
+                    <div class="course__text_details mt-40">
+                        <h1 class="mb-20">{{ course.name }}</h1>
+                    </div>
+                    <div class="course__content_block mt-30">
+
+                        <div class="">
+
+                            <ul class="tabs">
+                                <li class="tab-link current" data-tab="tab-1">Video</li>
+                                <li class="tab-link" data-tab="tab-2">Audio</li>
+                                <li class="tab-link" data-tab="tab-3">Document</li>
+                            </ul>
+
+                            <div id="tab-1" class="tab-content current">
+                                
+                                    {% for playlist in course.playlists %}
+                                    <a href="{{ 'course-playlist' | page({ 'course': course.slug, 'playlist': playlist.slug }) }}">
+                                        <div class="card mb-3" style="width: 100%;">
+                                            <div class="card-body"
+                                                style="text-decoration: none; color: #000; padding: 15px">
+                                                <h5 class="card-title">{{playlist.name}}</h5>
+                                                <p class="card-text">
+                                                    {{playlist.description | raw}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    {% endfor %}
+                            </div>
+                            <div id="tab-2" class="tab-content">
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <td class="text-center">File Name</td>
+                                                <td class="text-center">File Size</td>
+                                                <td class="text-center">Play/Download</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for audio in course.audios %}
+                                            <tr>
+                                                <td class="text-left">{{ audio.title }}</td>
+                                                <td class="">{{audio.source == 'file_upload' ? (audio.file_path.file_size)/(1000 * 1000) |round(1, 'floor') : '--' }}</td>
+                                                <td class="text-center">
+                                                    {% if audio.source == 'file_upload' %}
+                                                    <audio
+                                                        controls
+                                                        src="{{ audio.file_path.getPath() }}">
+                                                            Your browser does not support the
+                                                            <code>audio</code> element.
+                                                    </audio>
+                                                    {% endif %}
+
+                                                    {% if audio.source == 'remote' %}
+                                                        <a href="{{ audio.remote_path }}" download target="_blank">Download</a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+
+                            </div>
+                            <div id="tab-3" class="tab-content">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <td class="text-center">File Name</td>
+                                                <td class="text-center">File Size</td>
+                                                <td class="text-center">Download</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for document in course.documents %}
+                                            <tr>
+                                                <td class="text-left">{{ document.title }}</td>
+                                                <td class="">{{ (document.file_path.file_size)/(1000 * 1000) |round(1, 'floor') }}</td>
+                                                <td class="text-center">
+                                                    <a href="{{ document.file_path.getPath() }}" download target="_blank">Download</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div><!-- container -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>

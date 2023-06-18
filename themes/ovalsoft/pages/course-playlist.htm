@@ -1,0 +1,105 @@
+title = "Course Playlist"
+url = "/course-playlist/:course/:playlist"
+layout = "default"
+is_hidden = 0
+
+[playlistVideos]
+playlist = "{{ :playlist }}"
+
+[session]
+security = "user"
+allowedUserGroups[] = "paid-users"
+allowedUserGroups[] = "registered"
+redirect = "login"
+==
+<?php
+use Ovalsoft\Courses\Models\Playlist;
+use Ovalsoft\Payment\Models\UserProduct;
+use Pixel\Shop\Models\Item;
+
+function onStart() {
+
+    $this->addCss('/plugins/ovalsoft/courses/assets/css/tabs.css');
+    $this->addJs('/plugins/ovalsoft/courses/assets/js/tabs.js');
+
+    $course = $this->param('course');
+    $item = Item::where('slug', $course)->first();
+    $this['course'] = $item->course;
+    
+    $this['user'] = Auth::getUser() ?? null;
+    if($this['user'])
+    $this['paidResources'] = UserProduct::where('user_id', $this['user']->id)->lists('product_id');
+
+    if($this['paidResources']) {
+        if (! in_array($item->id, $this['paidResources'])) {
+            return redirect('404');
+        }
+    }
+    
+
+    // dd($this['playlist']);
+}
+?>
+==
+<!-- Intro Section -->
+<section class="inner-intro bg-img light-color overlay-before parallax-background">
+    <div class="container">
+        <div class="row title">
+            <h1 data-title="Blog"><span>courses</span></h1>
+        </div>
+    </div>
+</section>
+<!-- Intro Section -->
+<section class="course-section__block padding ptb-xs-60">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-8">
+
+                <div class="my-4">
+                    <h3 class="my-4">{{ playlist ? playlist.name : '' }}</h3>
+
+                    <p>{{ playlist ? playlist.description | raw : '' }}</p>
+                </div>
+
+                {% if playlistVideos.hasError %}
+                {% partial '@error' message="This playlist is empty" %}
+                {% else %}
+
+
+                {% if playlist.videos %}
+
+                {% for video in playlist.videos %}
+
+                <div class="col-12 video-pane rounded" style="border: solid 1px #CCC; margin-bottom: 20px">
+                    <div class="row">
+                        <div class="col-md-3 text-center" style="height:100px;">
+                            <a href="https://youtu.be/{{ video.youtube_video_id }}" class="html5lightbox">
+                                <i class="fas fa-video fa-6x" style="position:relative; top: calc(50% - 10px);"></i>
+                            </a>
+                        </div>
+                        <div class="col-md-9" style="padding: 15px">
+                            <h4 class="m-2"><a href="https://youtu.be/{{ video.youtube_video_id }}"
+                                    class="html5lightbox">{{ video.title }}</a></h4>
+                            {{ video.description }}
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+                {% endif %}
+
+                {% endif %}
+
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-4 bg-white">
+                    {% component 'ssbuttonsnb' %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

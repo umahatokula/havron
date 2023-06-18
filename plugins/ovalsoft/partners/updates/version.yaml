@@ -1,0 +1,8 @@
+1.0.1: 
+    - First version of partners
+    - create_partners_table.php
+    - seed_partners_table.php
+    - create_programs_table.php
+    - create_rainlab_extend_users.php
+    - create_program_registrations_table.php
+    - create_program_registration_uploads_table.php

@@ -1,0 +1,50 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    partner_id:
+        label: School Of Interest
+        relation: partner
+        select: name
+    program_id:
+        label: Program Of Interest
+        relation: program
+        select: name
+    fname:
+        label: First Name
+        searchable: true
+    lname:
+        label: Last Name
+        searchable: true
+    phone:
+        label: Phone
+        searchable: true
+    email:
+        label: Email
+        searchable: true
+    gender:
+        label: Gender
+        searchable: true
+    dob:
+        label: Date of Birth
+        searchable: true
+    nationality:
+        label: Nationality
+        searchable: true
+    country_of_residence:
+        label: Country of Residence
+        searchable: true
+    degree:
+        label: Degree Name
+        searchable: true
+    awarding_institution:
+        label: Awarding Institution
+        searchable: true
+    class_of_degree:
+        label: Class of Degree
+        searchable: true
+    start_date:
+        label: Start Date
+        searchable: true
+

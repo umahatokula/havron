@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Mailer
+
+# Model Form Field configuration
+form: $/ovalsoft/majicformsmailer/models/mailer/fields.yaml
+
+# Model Class name
+modelClass: Ovalsoft\MajicFormsMailer\Models\Mailer
+
+# Default redirect location
+defaultRedirect: ovalsoft/majicformsmailer/mailers
+
+# Create page
+create:
+    title: Create Mailer
+    redirect: ovalsoft/majicformsmailer/mailers/update/:id
+    redirectClose: ovalsoft/majicformsmailer/mailers
+
+# Update page
+update:
+    title: Edit Mailer
+    redirect: ovalsoft/majicformsmailer/mailers
+    redirectClose: ovalsoft/majicformsmailer/mailers
+
+# Preview page
+preview:
+    title: Preview Mailer

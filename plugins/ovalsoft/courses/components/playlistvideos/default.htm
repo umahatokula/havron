@@ -1,0 +1,26 @@
+{% if __SELF__.hasError %}
+    {% partial '@error' message="This playlist is empty" %}
+{% else %}
+
+    
+        {% if playlist.videos %}
+
+          {% for video in playlist.videos %}
+
+            <div class="col-12 d-flex flex-column flex-lg-row video-pane mb-4 rounded" style="border: solid 1px #CCC">
+              <div class="">
+                <a href="https://youtu.be/{{ video.youtube_video_id }}" class="html5lightbox">
+                  <img src="{{ 'assets/images/video_reel.jpeg' | theme }}" width="200px" alt="Default video image">
+                </a>
+              </div>
+              <div class="pl-xl-4 p-2">
+              <h4 class="m-2"><a href="https://youtu.be/{{ video.youtube_video_id }}" class="html5lightbox">{{ video.title }}</a></h4>
+                {{ video.description }}
+              </div>   			
+            </div>
+
+          {% endfor %}
+
+        {% endif %}
+    
+{% endif %}

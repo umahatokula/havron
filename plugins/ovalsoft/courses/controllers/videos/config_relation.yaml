@@ -1,0 +1,12 @@
+# ===================================
+#  Relation Behavior Config
+# ===================================
+
+playlists:
+    label: To Playlist
+    view:
+        list: $/ovalsoft/courses/models/playlist/columns.yaml
+        toolbarButtons: add|remove
+    manage:
+        form: $/ovalsoft/courses/models/playlist/fields.yaml
+        recordsPerPage: 10

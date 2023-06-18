@@ -1,0 +1,209 @@
+    <form
+    data-request="onSubmitProgramRegistrationModelForm"
+    data-request-validate
+    data-request-flash
+    data-request-files
+	data-request-success="document.getElementById('form').reset();" 
+    class = 'form-horizontal contact-form mt-45'>
+
+    <div class="container">            
+        <div class="row">
+            {% if partner.form_is_external %}
+            <div class="col-sm-12 text-left">
+                <p>Click on the link below to register</p>
+                <p><a href="{{ partner.external_link }}" target="_blank">{{ partner.external_link }}</a></p>
+            </div>
+            {% else %}
+            <div class="col-sm-12">
+                <div class="form-field text-left">
+
+                    <h3>Havron elearning Platform</h3>
+
+                    <p>Please complete this form to apply for a programme at any of our partner institutions</p>
+                    <p><span>*</span> Required</p>
+
+                </div>
+
+                <br>
+
+                {% flash %}
+                    <div class="alert alert-{{ type }}">
+                        {{ message }}
+                    </div>
+                {% endflash %}
+
+                <div class="text-left alert alert-danger" data-validate-error>
+                    <p data-message></p>
+                </div>
+
+                <div class="form-field text-left">
+                    <label for="partner_id" class="col-sm-4 control-label" style="text-align: left;">School of Interest</label>
+                    <div class="col-sm-8">
+                        <select class="input-sm form-full" id="partner_id" name="partner_id" style="border: 1px solid #E5E5E5;" data-request="onSelectPartner">
+                        <option value="">Select an institution</option>
+                        {% for p in partners %}
+                            <option {{ partner.id == p.id ? 'selected' : '' }} value="{{ p.id }}">{{ p.name }}</option>
+                        {% endfor %}
+                        </select>
+                        <span data-validate-for="partner_id"></span>
+                    </div>
+                </div>
+
+                <div class="form-field text-left">
+                    <label for="program_id" class="col-sm-4 control-label" style="text-align: left;">Program Selection</label>
+                    <div class="col-sm-8" id="program_selections">
+                        <select class="input-sm form-full" id="program_id" name="program_id" style="border: 1px solid #E5E5E5;">
+                        <option value="">Select a program</option>
+                        {% for program in programs %}
+                            <option value="{{ program.id }}">{{ program.name }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-field text-left">
+                    <label for="email" class="col-sm-4 control-label" style="text-align: left;">Email</label>
+                    <div class="col-sm-8">
+                        <input class="input-sm form-full" id="email" type="email" name="email" placeholder="Email Address">
+                    </div>
+                </div>
+
+                <div class="form-field text-left">
+                    <label for="fname" class="col-sm-4 control-label" style="text-align: left;">First Name</label>
+                    <div class="col-sm-8">
+                        <input class="input-sm form-full" id="fname" type="text" name="fname" placeholder="First Name">
+                    </div>
+                </div>
+
+                <div class="form-field text-left">
+                    <label for="lname" class="col-sm-4 control-label" style="text-align: left;">Other Names</label>
+                    <div class="col-sm-8">
+                        <input class="input-sm form-full" id="lname" type="text" name="lname" placeholder="Other Names">
+                    </div>
+                </div>
+
+                <div class="form-field text-left">
+                    <label for="phone" class="col-sm-4 control-label" style="text-align: left;">Phone Number</label>
+                    <div class="col-sm-8">
+                        <input class="input-sm form-full" id="phone" type="text" name="phone" placeholder="Phone Number">
+                    </div>
+                </div>
+
+                <div class="form-field text-left">
+                    <label for="gender" class="col-sm-4 control-label" style="text-align: left;">Gender</label>
+                    <div class="col-sm-8">
+                        <select class="input-sm form-full" id="gender" name="gender" style="border: 1px solid #E5E5E5;">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-field text-left">
+                    <label for="dob" class="col-sm-4 control-label" style="text-align: left;">Date of Birth</label>
+                    <div class="col-sm-8">
+                        <input class="input-sm form-full" id="dob" type="date" name="dob" placeholder="Phone">
+                    </div>
+                </div>
+
+                <div class="form-field text-left">
+                    <label for="nationality" class="col-sm-4 control-label" style="text-align: left;">Nationality</label>
+                    <div class="col-sm-8">
+                        <input class="input-sm form-full" id="nationality" type="text" name="nationality" placeholder="Nationality">
+                    </div>
+                </div>
+
+                <div class="form-field text-left">
+                    <label for="country_of_residence" class="col-sm-4 control-label" style="text-align: left;">Country of Residence</label>
+                    <div class="col-sm-8">
+                        <input class="input-sm form-full" id="country_of_residence" type="text" name="country_of_residence" placeholder="Country of Residence">
+                    </div>
+                </div>
+                
+                <br>
+
+                <div class="form-field text-left">
+                    <h5>ACADEMIC QUALIFICATIONS</h5>
+                </div>
+
+                <div class="form-field text-left">
+                    <label for="degree" class="col-sm-4 control-label" style="text-align: left;">Name of your Degree</label>
+                    <div class="col-sm-8">
+                        <input class="input-sm form-full" id="degree" type="text" name="degree" placeholder="degree">
+                    </div>
+                </div>
+
+                <div class="form-field text-left">
+                    <label for="awarding_institution" class="col-sm-4 control-label" style="text-align: left;">Awarding Institution</label>
+                    <div class="col-sm-8">
+                        <input class="input-sm form-full" id="awarding_institution" type="text" name="awarding_institution" placeholder="awarding_institution">
+                    </div>
+                </div>
+
+                <div class="form-field text-left">
+                    <label for="class_of_degree" class="col-sm-4 control-label" style="text-align: left;">Class of Degree </label>
+                    <div class="col-sm-8">
+                        <select class="input-sm form-full" id="class_of_degree" name="class_of_degree" style="border: 1px solid #E5E5E5;">
+                            <option value="First Class">First Class</option>
+                            <option value="Second Upper">Second Upper</option>
+                            <option value="Second Lower">Second Lower</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-field text-left">
+                    <label for="academic_transcript" class="col-sm-4 control-label" style="text-align: left;">Academic Transcript</label>
+                    <div class="col-sm-8">
+                        <input class="input-sm form-full" id="academic_transcript" type="file" name="academic_transcript">
+                    </div>
+                </div>
+
+                <div class="form-field text-left">
+                    <label for="cv" class="col-sm-4 control-label" style="text-align: left;">CV</label>
+                    <div class="col-sm-8">
+                        <input class="input-sm form-full" id="cv" type="file" name="cv" placeholder="cv">
+                    </div>
+                </div>
+
+                <div class="form-field text-left">
+                    <label for="professional_or_academic_reference" class="col-sm-4 control-label" style="text-align: left;">Professional/Academic Reference</label>
+                    <div class="col-sm-8">
+                        <input class="input-sm form-full" id="professional_or_academic_reference" type="file" name="professional_or_academic_reference" placeholder="professional_or_academic_reference">
+                    </div>
+                </div>
+
+                <div class="form-field text-left">
+                    <label for="mode_of_identification" class="col-sm-4 control-label" style="text-align: left;">Mode of Identification</label>
+                    <div class="col-sm-8">
+                        <input class="input-sm form-full" id="mode_of_identification" type="file" name="mode_of_identification" placeholder="mode_of_identification">
+                    </div>
+                </div>
+
+                <div class="form-field text-left">
+                    <label for="start_date" class="col-sm-4 control-label" style="text-align: left;">Start Date </label>
+                    <div class="col-sm-8">
+                        <input class="input-sm form-full" id="start_date" type="date" name="start_date" placeholder="start_date">
+                    </div>
+                </div>
+                
+                <br>
+
+                <div class="form-field text-left">
+                    <h5>DECLARATION</h5>
+                </div>
+
+                <div class="form-field text-left">
+                    <input class="input-sm form-full" id="declaration" type="checkbox" name="declaration">
+                    <label for="declaration" class="col-sm-12 control-label" style="text-align: left;">I declare that, to the best of my knowledge and belief, all information entered above is true and correct</label> 
+                </div>
+
+            </div>
+            <div class="col-sm-12 mt-30">
+                <button class="btn-text" type="submit" id="submit" name="button"> Submit </button>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+{{ form_close() }}
